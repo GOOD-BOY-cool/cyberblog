@@ -25,9 +25,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-        env:
-          # 项目站点部署在 /<repo>/ 子路径下，必须让 Vite 改写资源前缀
-          BASE: ${{ github.event.repository.name }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

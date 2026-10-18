@@ -13,9 +13,10 @@ import { cyberblog } from './scripts/vite-plugin-blog.mjs'
 const root = realpathSync(path.dirname(fileURLToPath(import.meta.url)))
 
 /**
- * 部署到 https://<user>.github.io/<repo>/ 时，用 BASE=repo npm run build
- * （只写仓库名，不要带斜杠——Windows 的 Git Bash 会把以 / 开头的值当成路径转换掉）
- * 其余静态托管（Netlify / Vercel / Cloudflare / 自有域名根目录）保持默认即可
+ * 当前部署在自有域名根路径（https://milk-dragon.cn），base 保持 '/' 即可。
+ * 如果哪天改回 GitHub 项目站点（https://<user>.github.io/<repo>/），
+ * 构建时传 BASE=<仓库名>（只写仓库名，不要带斜杠——Git Bash 会把以 / 开头的值当路径转换掉）。
+ * Netlify / Vercel / Cloudflare / 自有域名根目录都不需要 BASE。
  */
 const repo = (process.env.BASE || '').replace(/^\/+|\/+$/g, '')
 
