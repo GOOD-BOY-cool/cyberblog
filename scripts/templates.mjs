@@ -17,7 +17,7 @@ export function layout({ title, desc, body, root = '', boot = false }) {
 <script>document.documentElement.classList.add("js");</script>
 <script>(function () { try { var t = localStorage.getItem("neon-theme"); document.documentElement.setAttribute("data-theme", t === "anime" ? "anime" : "cartoon"); } catch (e) { document.documentElement.setAttribute("data-theme", "cartoon"); } })();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#05060a">
+<meta name="theme-color" content="#eaf8ff">
 <title>${esc(title)}</title>
 <meta name="description" content="${escAttr(desc)}">
 <meta property="og:title" content="${escAttr(title)}">
