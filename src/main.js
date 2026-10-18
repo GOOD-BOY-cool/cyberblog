@@ -441,10 +441,86 @@
 
       paint(next);
       try { localStorage.setItem(KEY, next); } catch (e) {}
+
+      // 通知其他组件（评论 iframe）跟着换主题
+      document.dispatchEvent(new CustomEvent("neon:theme", { detail: { theme: next } }));
     });
   }
 
-  /* ---------------- 13. 初始化 ---------------- */
+  /* ---------------- 13. 评论（Giscus：基于 GitHub Discussions，无后端） ---------------- */
+  function initComments() {
+    var mount = $("#giscus-mount");
+    if (!mount) return;
+
+    var repo = mount.dataset.repo;
+    var repoId = mount.dataset.repoId;
+    var category = mount.dataset.category || "General";
+    var categoryId = mount.dataset.categoryId;
+
+    // 没填配置就不请求任何外部脚本，只留一段开通说明
+    if (!repo || !repoId || !categoryId) {
+      mount.innerHTML =
+        '<div class="panel comments__setup">' +
+        '<div class="panel__bar"><span class="mono">// SETUP REQUIRED</span></div>' +
+        '<ol>' +
+        "<li>仓库 Settings → General → Features 勾上 <b>Discussions</b></li>" +
+        '<li>到 <b>github.com/apps/giscus</b> 把它安装到该仓库</li>' +
+        "<li>打开 <b>giscus.app/zh-CN</b> 填仓库名，复制 <code>data-repo-id</code> 与 <code>data-category-id</code></li>" +
+        "<li>写进 <code>scripts/site.config.mjs</code> 的 <code>giscus</code> 字段，重新构建</li>" +
+        "</ol>" +
+        "</div>";
+      return;
+    }
+
+    var loaded = false;
+    function load() {
+      if (loaded) return;
+      loaded = true;
+      var s = document.createElement("script");
+      s.src = "https://giscus.app/client.js";
+      s.async = true;
+      s.crossOrigin = "anonymous";
+      s.setAttribute("data-repo", repo);
+      s.setAttribute("data-repo-id", repoId);
+      s.setAttribute("data-category", category);
+      s.setAttribute("data-category-id", categoryId);
+      s.setAttribute("data-mapping", "pathname");
+      s.setAttribute("data-strict", "0");
+      s.setAttribute("data-reactions-enabled", "1");
+      s.setAttribute("data-emit-metadata", "0");
+      s.setAttribute("data-input-position", "top");
+      s.setAttribute("data-lang", "zh-CN");
+      s.setAttribute("data-loading", "lazy");
+      s.setAttribute("data-theme", document.documentElement.getAttribute("data-theme") === "anime" ? "light" : "dark");
+      mount.appendChild(s);
+    }
+
+    // 距离视口 600px 时才拉 giscus 的脚本，别让它拖慢文章首屏
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          load();
+          io.disconnect();
+        });
+      }, { rootMargin: "600px 0px" });
+      io.observe(mount);
+    } else {
+      load();
+    }
+
+    // 主题切换时给 iframe 发消息换肤（giscus 官方支持的 postMessage 协议）
+    document.addEventListener("neon:theme", function (e) {
+      var frame = document.querySelector("iframe.giscus-frame");
+      if (!frame || !frame.contentWindow) return;
+      frame.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: e.detail.theme === "anime" ? "light" : "dark" } } },
+        "https://giscus.app"
+      );
+    });
+  }
+
+  /* ---------------- 14. 初始化 ---------------- */
   function boot() {
     // 首屏关键动效（打字机 / 进场 / 导航）立刻上；粒子画布延后到浏览器空闲，
     // 避免和 LCP 抢主线程 —— 背景晚 300ms 出现，肉眼几乎无感。
@@ -460,6 +536,7 @@
     initCopy();
     initArchive();
     initTheme();
+    initComments();
 
     var idle = window.requestIdleCallback || function (fn) { return setTimeout(fn, 260); };
     idle(function () { initCanvas(); }, { timeout: 1400 });

@@ -6,6 +6,8 @@
 - **内容**：`content/*.md` + front matter，改完 push 就发布
 - **动效**：原生 CSS 动画 + 原生 JS + SMIL 动画 SVG（没有一张 GIF，动图仅 12KB）
 - **双背景**：右下角按钮一键在「经典暗色」与「亮色二次元」之间切换，0.55s 交叉淡入、无刷新、localStorage 记忆
+- **内容页**：首页 / 日志（筛选+搜索）/ 归档（按年份）/ 友链 / 关于 / 404 / RSS
+- **评论**：Giscus（GitHub Discussions），未配置时显示开通步骤，不会请求外部脚本
 - **部署**：纯静态，GitHub Pages / Netlify / Vercel / Cloudflare / Nginx 都能跑
 
 > 完整施工教程就在站点里：`content/2026-10-18-cyberpunk-blog-tutorial.md`
@@ -68,7 +70,7 @@ EOF
 
 ```
 content/          文章源文件（唯一需要天天动的目录）
-scripts/          构建器：markdown 渲染 / 模板 / 页面生成 / Vite 插件
+scripts/          构建器：markdown 渲染 / 模板 / 页面生成 / Vite 插件 / 友链数据
 src/main.js       交互层：粒子、打字机、进场、倾斜、搜索过滤、背景切换
 src/styles/       cyber.css：设计系统 + 全部 CSS 动画 + 代码高亮 + 亮色主题
 public/assets/    SVG 动图（含二次元背景）、logo、favicon（原样拷贝进 dist）
@@ -83,6 +85,19 @@ dist/             构建产物，可直接部署
 - **换成自己的图**：把 gif / webp / mp4 丢进 `public/assets/`，改 `scripts/templates.mjs` 里 `.bg-anime__art` 的 `src` 即可；`object-fit: cover` 已保证铺满
 - **铺满与可读性**：`.bg-anime` 是固定层，`z-index: 0` + `pointer-events: none`，不挡滚动与点击；上面盖一层 `.bg-anime__veil`（白色 24%→64% 渐变）压住背景，配合亮色文字令牌保证对比度
 - **配色**：亮色主题的所有颜色都在 `cyber.css` 的 `html[data-theme="anime"]` 块里，改令牌即可整体换肤
+
+## 友链与评论
+
+**友链**：改 `scripts/links.mjs`，加一条对象就是一张卡片（`name` / `url` / `desc` / `tags`，可选 `avatar` 外链头像）。不填头像时用站点名首字生成字母牌，避免外链裂图。申请规则在同文件的 `LINKS_NOTE`。
+
+**评论**：用 Giscus（基于 GitHub Discussions，免费、无广告、不用自建后端）。
+
+1. 仓库 Settings → General → Features 勾上 **Discussions**
+2. 打开 <https://github.com/apps/giscus>，安装到该仓库
+3. 打开 <https://giscus.app/zh-CN> 填仓库名，复制 `data-repo-id` 与 `data-category-id`
+4. 写进 `scripts/site.config.mjs` 的 `giscus` 字段，重新构建
+
+没填这四项时，文章页会显示一段「如何开启」的说明面板，**不会请求任何 giscus 脚本**。配置后评论区会懒加载（滚到距视口 600px 才拉脚本），并跟随亮/暗主题自动换肤。
 
 ## 部署
 

@@ -3,6 +3,7 @@
  * 全部是纯函数 —— 同一个输入永远得到同一个字符串，方便 diff 与缓存
  */
 import { SITE } from './site.config.mjs'
+import { LINKS, LINKS_NOTE } from './links.mjs'
 
 const esc = (s) => String(s ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c])
 const escAttr = (s) => esc(s).replace(/"/g, '&quot;')
@@ -53,6 +54,8 @@ ${boot ? BOOT : ''}
     <nav class="nav" id="nav">
       <a class="nav__link" href="${root}index.html">首页</a>
       <a class="nav__link" href="${root}posts/index.html">日志</a>
+      <a class="nav__link" href="${root}archive.html">归档</a>
+      <a class="nav__link" href="${root}links.html">友链</a>
       <a class="nav__link" href="${root}about.html">关于</a>
       <a class="nav__link nav__link--ghost" href="${root}feed.xml">RSS<span class="nav__dot"></span></a>
     </nav>
@@ -310,7 +313,8 @@ export function buildPost(post, prev, next) {
     </div>
     ${nav}
   </div>
-</article>`
+</article>
+${commentsBlock()}`
 
   return layout({
     title: `${post.title} — ${SITE.title}`,
@@ -390,5 +394,148 @@ export function buildNotFound() {
     desc: '页面不存在。',
     body,
     root: '/',
+  })
+}
+
+/* ---------------------------------------------------------------- 评论 */
+function commentsBlock() {
+  const g = SITE.giscus || {}
+  const enabled = Boolean(g.repo && g.repoId && g.categoryId)
+  return `<section class="comments" id="comments" aria-label="评论">
+  <div class="container">
+    <div class="comments__head">
+      <h2 class="comments__title"><span class="mono">//</span> COMMENTS</h2>
+      <p class="comments__hint mono">${
+        enabled ? '用 GitHub 账号登录后即可评论 · 无需注册本站' : '评论尚未启用 · 见下方说明'
+      }</p>
+    </div>
+    <div class="comments__mount" id="giscus-mount"
+         data-repo="${escAttr(g.repo || '')}"
+         data-repo-id="${escAttr(g.repoId || '')}"
+         data-category="${escAttr(g.category || 'General')}"
+         data-category-id="${escAttr(g.categoryId || '')}"></div>
+    <noscript><p class="comments__hint mono">评论组件需要 JavaScript。</p></noscript>
+  </div>
+</section>`
+}
+
+/* ---------------------------------------------------------------- 归档 */
+export function buildArchive(posts) {
+  const byYear = new Map()
+  for (const post of posts) {
+    const year = post.date.slice(0, 4)
+    if (!byYear.has(year)) byYear.set(year, [])
+    byYear.get(year).push(post)
+  }
+  const years = [...byYear.keys()].sort().reverse()
+
+  const groups = years
+    .map(
+      (year) => `<section class="archive__year">
+      <h2 class="archive__year-label">
+        <span class="mono">${year}</span>
+        <i class="mono">${byYear.get(year).length} POSTS</i>
+      </h2>
+      <ol class="archive__list">
+        ${byYear
+          .get(year)
+          .map(
+            (post) => `<li class="archive__item">
+          <a href="posts/${post.slug}.html">
+            <time class="mono" datetime="${post.date}">${post.date.slice(5).replace('-', '.')}</time>
+            <b>${esc(post.title)}</b>
+            <span class="archive__tags mono">${post.tags
+              .slice(0, 2)
+              .map((t) => `#${esc(t)}`)
+              .join(' ')}</span>
+            <span class="archive__time mono">${post.minutes} MIN</span>
+          </a>
+        </li>`
+          )
+          .join('')}
+      </ol>
+    </section>`
+    )
+    .join('')
+
+  const body = `<section class="page-head">
+  <div class="container">
+    <p class="crumb mono"><a href="index.html">HOME</a> / ARCHIVE</p>
+    <h1 class="page-title glitch" data-text="ARCHIVE">ARCHIVE</h1>
+    <p class="page-sub">${posts.length} 条日志 · ${years.length} 个年份 · 按时间倒序</p>
+  </div>
+</section>
+<section class="section section--flush">
+  <div class="container">
+    <div class="archive">${groups}</div>
+    <p class="archive__more mono">想按标签筛选？<a href="posts/index.html">去日志页 →</a></p>
+  </div>
+</section>`
+
+  return layout({
+    title: `归档 — ${SITE.title}`,
+    desc: '全部日志的时间归档，按年份分组。',
+    body,
+    root: '',
+  })
+}
+
+/* ---------------------------------------------------------------- 友链 */
+export function buildLinks() {
+  const cards = LINKS.map((link, i) => {
+    let host = link.url
+    try {
+      host = new URL(link.url).host.replace(/^www\./, '')
+    } catch (e) {
+      /* 地址写错时退化成原文，不炸构建 */
+    }
+    const accent = SITE.accents[i % SITE.accents.length]
+    const avatar = link.avatar
+      ? `<img class="link-card__avatar" src="${escAttr(link.avatar)}" alt="" width="46" height="46" loading="lazy" decoding="async">`
+      : `<span class="link-card__avatar" aria-hidden="true">${esc((link.name || '?').trim().slice(0, 1).toUpperCase())}</span>`
+
+    return `<a class="link-card link-card--${accent}" href="${escAttr(link.url)}" target="_blank" rel="noopener noreferrer">
+      ${avatar}
+      <span class="link-card__body">
+        <b>${esc(link.name)}</b>
+        <em class="mono">${esc(host)}</em>
+        <p>${esc(link.desc)}</p>
+        ${link.tags ? `<span class="link-card__tags">${link.tags.map((t) => `<i>${esc(t)}</i>`).join('')}</span>` : ''}
+      </span>
+      <span class="link-card__arrow" aria-hidden="true">&#8599;</span>
+    </a>`
+  }).join('')
+
+  const body = `<section class="page-head">
+  <div class="container">
+    <p class="crumb mono"><a href="index.html">HOME</a> / LINKS</p>
+    <h1 class="page-title glitch" data-text="LINKS">LINKS</h1>
+    <p class="page-sub">${LINKS.length} 个值得长期订阅的站点 · 信号互通</p>
+  </div>
+</section>
+<section class="section section--flush">
+  <div class="container">
+    <div class="links__grid">${cards}</div>
+
+    <div class="panel links__note">
+      <div class="panel__bar"><span class="mono">${esc(LINKS_NOTE.title)}</span></div>
+      <div class="links__note-body">
+        <ol>
+          ${LINKS_NOTE.rules.map((r) => `<li>${esc(r)}</li>`).join('')}
+        </ol>
+        <p class="links__note-site mono">本站信息：${esc(LINKS_NOTE.site)}</p>
+        <a class="btn btn--ghost" href="mailto:${SITE.email}?subject=%E5%8F%8B%E9%93%BE%E7%94%B3%E8%AF%B7">
+          <span>发邮件申请</span><i>&#8594;</i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>`
+
+  return layout({
+    title: `友链 — ${SITE.title}`,
+    desc: '友链：值得长期订阅的站点。',
+    body,
+    root: '',
   })
 }

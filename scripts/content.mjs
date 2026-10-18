@@ -14,6 +14,26 @@ export const ROOT = fs.realpathSync(
 )
 const CONTENT_DIR = path.join(ROOT, 'content')
 
+/**
+ * 统一日期为 YYYY-MM-DD。
+ * 注意：gray-matter 底层是 js-yaml，`date: 2026-09-28` 这种 ISO 写法会被解析成 Date 对象，
+ * 直接 String() 会得到 "Mon Sep 28 2026 ..."，排序和分组都会错。这里统一归一化。
+ */
+function normalizeDate(value) {
+  if (!value) return '2026-01-01'
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    // YAML 的纯日期按 UTC 零点解析，用 UTC 取值可以拿回作者写的日期
+    const y = value.getUTCFullYear()
+    const m = String(value.getUTCMonth() + 1).padStart(2, '0')
+    const d = String(value.getUTCDate()).padStart(2, '0')
+    return `${y}-${m}-${d}`
+  }
+  const text = String(value).trim()
+  const hit = /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/.exec(text)
+  if (hit) return `${hit[1]}-${hit[2].padStart(2, '0')}-${hit[3].padStart(2, '0')}`
+  return text.slice(0, 10)
+}
+
 /** 阅读时长：中文按 350 字/分钟，英文按 200 词/分钟 */
 function readingTime(text) {
   const zh = (text.match(/[\u4e00-\u9fa5]/g) || []).length
@@ -33,7 +53,7 @@ export function readPosts() {
     return {
       slug,
       title: data.title || slug,
-      date: data.date ? String(data.date).slice(0, 10) : '2026-01-01',
+      date: normalizeDate(data.date),
       tags: Array.isArray(data.tags)
         ? data.tags.map(String)
         : String(data.tags || '')

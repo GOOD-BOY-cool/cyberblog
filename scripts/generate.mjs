@@ -5,7 +5,15 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { ROOT, readPosts } from './content.mjs'
-import { buildIndex, buildList, buildPost, buildAbout, buildNotFound } from './templates.mjs'
+import {
+  buildIndex,
+  buildList,
+  buildPost,
+  buildAbout,
+  buildArchive,
+  buildLinks,
+  buildNotFound,
+} from './templates.mjs'
 import { SITE } from './site.config.mjs'
 
 // generateSite() 已经把全部文章解析过一遍，构建收尾阶段直接复用，避免重复解析
@@ -19,6 +27,8 @@ export function generateSite() {
   pages.set('index', buildIndex(posts))
   pages.set('posts/index', buildList(posts))
   pages.set('about', buildAbout(posts))
+  pages.set('archive', buildArchive(posts))
+  pages.set('links', buildLinks())
   pages.set('404', buildNotFound())
   posts.forEach((post, i) => {
     pages.set(`posts/${post.slug}`, buildPost(post, posts[i + 1] ?? null, posts[i - 1] ?? null))
@@ -42,6 +52,8 @@ export function emitStatic(outDir) {
     { loc: '/', prio: '1.0' },
     { loc: '/posts/index.html', prio: '0.8' },
     { loc: '/about.html', prio: '0.6' },
+    { loc: '/archive.html', prio: '0.6' },
+    { loc: '/links.html', prio: '0.5' },
     ...posts.map((p) => ({ loc: `/posts/${p.slug}.html`, prio: '0.7' })),
   ]
 
@@ -66,7 +78,7 @@ ${posts
       <title>${p.title}</title>
       <link>${base}/posts/${p.slug}.html</link>
       <guid>${base}/posts/${p.slug}.html</guid>
-      <pubDate>${new Date(`${p.date}T00:00:00+08:00`).toUTCString()}</pubDate>
+      <pubDate>${new Date(`${p.date}T00:00:00Z`).toUTCString()}</pubDate>
       <description>${p.summary}</description>
     </item>`
   )

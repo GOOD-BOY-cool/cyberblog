@@ -14,4 +14,20 @@ export const SITE = {
   locale: 'zh-CN',
   // 卡片配色轮换，顺序对应 --cyan / --magenta / --violet / --amber
   accents: ['cyan', 'magenta', 'violet', 'amber'],
+
+  /**
+   * 评论（Giscus，基于 GitHub Discussions，免费、无广告、无后端）
+   * 开启步骤：
+   *   1. 仓库 Settings → General → Features 勾上 Discussions
+   *   2. 到 https://github.com/apps/giscus 安装到该仓库
+   *   3. 打开 https://giscus.app/zh-CN 填仓库名，拿到 data-repo-id 与 data-category-id
+   *   4. 把四个值填进来，重新构建
+   * 留空则文章页显示「如何开启评论」的占位说明，不会请求任何外部脚本。
+   */
+  giscus: {
+    repo: '',
+    repoId: '',
+    category: 'General',
+    categoryId: '',
+  },
 }
