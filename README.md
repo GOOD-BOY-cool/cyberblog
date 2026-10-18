@@ -118,8 +118,12 @@ dist/             构建产物，可直接部署
 
 ## 部署
 
-**GitHub Pages**：仓库已带 `.github/workflows/deploy.yml`，push 到 `main` 即自动构建。到 Settings → Pages 把 Source 设为 **GitHub Actions**。
-项目站点在子路径下，工作流会自动传 `BASE=<repo>`，无需改配置。
+**GitHub Pages**：仓库已带 `.github/workflows/deploy.yml`，push 到 `main` 即自动构建。到 Settings → Pages 把 Source 设为 **GitHub Actions**，Custom domain 填 `milk-dragon.cn`（`public/CNAME` 里也有一份兜底）。
+
+站点部署在自定义域名根路径，`vite base` 是 `/`；只有回到 `user.github.io/repo/` 这种项目站点时才需要 `BASE=<仓库名> npm run build`。
+
+> 推送报 `Failed to connect to github.com:443 over proxy 127.0.0.1`：git 里配了本地代理但代理软件没开。
+> 要么启动代理软件，要么直连推：`git -c http.proxy= -c https.proxy= push`。
 
 **Netlify / Vercel / Cloudflare Pages**：Build command `npm run build`，Output directory `dist`。
 
