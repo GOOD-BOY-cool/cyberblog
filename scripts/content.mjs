@@ -34,6 +34,13 @@ function normalizeDate(value) {
   return text.slice(0, 10)
 }
 
+/** 字数：中文按字计，英文按词计 */
+function countWords(text) {
+  const zh = (text.match(/[\u4e00-\u9fa5]/g) || []).length
+  const en = (text.match(/[A-Za-z0-9]+/g) || []).length
+  return zh + en
+}
+
 /** 阅读时长：中文按 350 字/分钟，英文按 200 词/分钟 */
 function readingTime(text) {
   const zh = (text.match(/[\u4e00-\u9fa5]/g) || []).length
@@ -64,6 +71,7 @@ export function readPosts() {
       html,
       toc,
       minutes: readingTime(content),
+      words: countWords(content),
       accent: 'cyan', // 先占位，下面按排序结果轮换
     }
   })

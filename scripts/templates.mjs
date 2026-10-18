@@ -429,6 +429,14 @@ export function buildArchive(posts) {
   }
   const years = [...byYear.keys()].sort().reverse()
 
+  // 侧栏统计
+  const tagCount = new Map()
+  for (const post of posts) for (const tag of post.tags) tagCount.set(tag, (tagCount.get(tag) || 0) + 1)
+  const tagList = [...tagCount.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  const totalWords = posts.reduce((sum, post) => sum + (post.words || 0), 0)
+  const wordText = totalWords >= 10000 ? `${(totalWords / 10000).toFixed(1)} 万` : String(totalWords)
+  const latest = posts[0] ? posts[0].date.replace(/-/g, '.') : '—'
+
   const groups = years
     .map(
       (year) => `<section class="archive__year">
@@ -441,15 +449,15 @@ export function buildArchive(posts) {
           .get(year)
           .map(
             (post) => `<li class="archive__item">
-          <a href="posts/${post.slug}.html">
-            <time class="mono" datetime="${post.date}">${post.date.slice(5).replace('-', '.')}</time>
-            <b>${esc(post.title)}</b>
-            <span class="archive__tags mono">${post.tags
-              .slice(0, 2)
-              .map((t) => `#${esc(t)}`)
-              .join(' ')}</span>
-            <span class="archive__time mono">${post.minutes} MIN</span>
-          </a>
+          <time class="archive__date mono" datetime="${post.date}">${post.date.slice(5).replace('-', '.')}</time>
+          <span class="archive__cat">${esc(post.tags[0] || 'LOG')}</span>
+          <a class="archive__title" href="posts/${post.slug}.html">${esc(post.title)}</a>
+          <span class="archive__tags">${post.tags
+            .map(
+              (tag) =>
+                `<a class="mono" href="posts/index.html?tag=${encodeURIComponent(tag)}">#${esc(tag)}</a>`
+            )
+            .join('')}</span>
         </li>`
           )
           .join('')}
@@ -466,9 +474,34 @@ export function buildArchive(posts) {
   </div>
 </section>
 <section class="section section--flush">
-  <div class="container">
+  <div class="container archive__layout">
     <div class="archive">${groups}</div>
-    <p class="archive__more mono">想按标签筛选？<a href="posts/index.html">去日志页 →</a></p>
+    <aside class="archive__side">
+      <div class="sidecard">
+        <p class="sidecard__title mono">// 站点统计</p>
+        <ul class="sidecard__stats">
+          <li><span>文章</span><b>${posts.length}</b></li>
+          <li><span>标签</span><b>${tagList.length}</b></li>
+          <li><span>总字数</span><b>${wordText}</b></li>
+          <li><span>最近更新</span><b>${latest}</b></li>
+        </ul>
+      </div>
+      <div class="sidecard">
+        <p class="sidecard__title mono">// 标签</p>
+        <div class="sidecard__tags">
+          ${tagList
+            .map(
+              ([tag, count]) =>
+                `<a class="mono" href="posts/index.html?tag=${encodeURIComponent(tag)}">${esc(tag)}<i>${count}</i></a>`
+            )
+            .join('')}
+        </div>
+      </div>
+      <div class="sidecard sidecard--note">
+        <p class="sidecard__title mono">// 说明</p>
+        <p>按年份归档，点击标签可跳转到「日志」页并自动筛选。</p>
+      </div>
+    </aside>
   </div>
 </section>`
 

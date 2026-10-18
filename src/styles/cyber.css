@@ -38,6 +38,8 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background:
     radial-gradient(90% 60% at 82% -8%, rgba(255, 45, 120, 0.14), transparent 60%),
     radial-gradient(80% 55% at 8% 4%, rgba(34, 240, 255, 0.13), transparent 62%),
@@ -90,6 +92,7 @@ main,
 .site-header,
 .site-footer,
 .page-head { position: relative; z-index: 2; }
+main { flex: 1 0 auto; }
 
 /* full-screen effect layers */
 .fx {
@@ -1782,17 +1785,23 @@ html[data-theme="anime"] .btn--ghost {
 }
 
 /* ---------- 12. 归档页 ---------- */
+.archive__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 268px;
+  gap: 30px;
+  align-items: start;
+}
 .archive {
   display: grid;
-  gap: 38px;
-  max-width: 880px;
+  gap: 34px;
+  min-width: 0;
 }
 .archive__year-label {
   display: flex;
   align-items: baseline;
   gap: 14px;
   margin: 0 0 6px;
-  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
   font-weight: 800;
   letter-spacing: 0.04em;
   color: #eef6ff;
@@ -1808,49 +1817,111 @@ html[data-theme="anime"] .btn--ghost {
   padding: 0;
   list-style: none;
 }
-.archive__item a {
+.archive__item {
   display: grid;
-  grid-template-columns: 58px minmax(0, 1fr) auto 62px;
-  align-items: baseline;
-  gap: 16px;
-  padding: 14px 8px 14px 0;
+  grid-template-columns: 52px auto minmax(0, 1fr) 190px;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 8px;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
-  color: var(--text);
-  transition: color 0.25s ease, transform 0.3s var(--ease), border-color 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.3s var(--ease);
 }
-.archive__item a:hover {
-  color: var(--cyan);
-  border-color: rgba(34, 240, 255, 0.35);
-  transform: translateX(4px);
+.archive__item:hover {
+  border-bottom-color: rgba(34, 240, 255, 0.35);
+  transform: translateX(3px);
 }
-.archive__item time {
+.archive__date {
   font-size: 12px;
   color: var(--muted);
   letter-spacing: 0.06em;
 }
-.archive__item b {
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.5;
-}
-.archive__tags {
-  font-size: 10.5px;
-  color: var(--magenta);
-  white-space: nowrap;
-}
-.archive__time {
+.archive__cat {
+  padding: 2px 9px;
   font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--muted);
-  text-align: right;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: var(--magenta);
+  border: 1px solid rgba(255, 45, 120, 0.32);
+  background: rgba(255, 45, 120, 0.08);
+  border-radius: 999px;
 }
-.archive__more {
-  margin: 34px 0 0;
+.archive__title {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+.archive__title:hover { color: var(--cyan); }
+.archive__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.archive__tags a {
+  font-size: 10.5px;
+  color: var(--muted);
+  transition: color 0.25s ease;
+}
+.archive__tags a:hover { color: var(--cyan); }
+
+/* 侧栏卡片 */
+.archive__side {
+  position: sticky;
+  top: 92px;
+  display: grid;
+  gap: 16px;
+}
+.sidecard {
+  padding: 16px 18px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.sidecard__title {
+  margin: 0 0 12px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--magenta);
+}
+.sidecard__stats {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.sidecard__stats li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.sidecard__stats b { color: var(--text); font-weight: 600; }
+.sidecard__tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.sidecard__tags a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
   font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--muted);
+  border-radius: 999px;
+  border: 1px solid rgba(120, 220, 255, 0.2);
+  color: var(--text-dim);
+  transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
 }
-.archive__more a { color: var(--cyan); }
+.sidecard__tags a:hover {
+  color: var(--cyan);
+  border-color: rgba(34, 240, 255, 0.5);
+  background: rgba(34, 240, 255, 0.06);
+}
+.sidecard__tags i { font-style: normal; font-size: 10px; color: var(--muted); }
+.sidecard--note p { margin: 0; font-size: 12px; line-height: 1.8; color: var(--muted); }
 
 /* ---------- 13. 友链页 ---------- */
 .links__grid {
@@ -2014,12 +2085,122 @@ html[data-theme="anime"] .comments__setup code {
 }
 
 /* 窄屏：归档条目收成两列，友链单列 */
-@media (max-width: 640px) {
-  .archive__item a {
-    grid-template-columns: 52px minmax(0, 1fr) 52px;
-    gap: 12px;
+@media (max-width: 1024px) {
+  .archive__layout { grid-template-columns: 1fr; }
+  .archive__side { position: static; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+}
+@media (max-width: 760px) {
+  .archive__item {
+    grid-template-columns: 46px auto minmax(0, 1fr);
+    gap: 10px;
   }
   .archive__tags { display: none; }
+}
+@media (max-width: 640px) {
   .links__grid { grid-template-columns: 1fr; }
   .comments__head { flex-direction: column; gap: 6px; }
 }
+
+/* ---------- 16. 亮色主题：壁纸 + 毛玻璃（参考 Fuwari 的观感） ---------- */
+/* 背景：给 SVG 加模糊与轻微放大，模拟「壁纸虚化」的效果 */
+html[data-theme="anime"] .bg-anime__art {
+  filter: blur(5px) saturate(1.18) brightness(1.03);
+  transform: scale(1.06);
+}
+html[data-theme="anime"] .bg-anime__veil {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(255, 251, 253, 0.46) 42%,
+    rgba(255, 255, 255, 0.62) 100%
+  );
+}
+
+/* 卡片统一成圆角毛玻璃 */
+html[data-theme="anime"] .card,
+html[data-theme="anime"] .panel,
+html[data-theme="anime"] .link-card,
+html[data-theme="anime"] .post-nav__item,
+html[data-theme="anime"] .cta,
+html[data-theme="anime"] .comments__setup,
+html[data-theme="anime"] .sidecard {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(18px) saturate(1.15);
+  box-shadow: 0 14px 36px -26px rgba(84, 64, 124, 0.45);
+}
+html[data-theme="anime"] .card:hover {
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 22px 46px -28px rgba(84, 64, 124, 0.6);
+}
+html[data-theme="anime"] .panel__bar {
+  border-bottom-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* 顶栏做成浮动胶囊 */
+html[data-theme="anime"] .site-header,
+html[data-theme="anime"] .site-header.is-scrolled {
+  background: transparent;
+  border-bottom: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+html[data-theme="anime"] .site-header__inner {
+  margin-top: 12px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow: 0 16px 36px -28px rgba(70, 50, 110, 0.6);
+}
+
+/* 按钮 / 筛选 / 搜索统一胶囊 */
+html[data-theme="anime"] .btn,
+html[data-theme="anime"] .chip,
+html[data-theme="anime"] .chip-btn,
+html[data-theme="anime"] .search,
+html[data-theme="anime"] .tag,
+html[data-theme="anime"] .archive__cat {
+  border-radius: 999px;
+}
+html[data-theme="anime"] .chip-btn {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+html[data-theme="anime"] .archive__item { border-bottom-color: rgba(120, 100, 150, 0.14); }
+html[data-theme="anime"] .archive__item:hover { border-bottom-color: rgba(11, 147, 168, 0.4); }
+html[data-theme="anime"] .archive__title { color: #23263c; }
+html[data-theme="anime"] .archive__cat {
+  color: #b32a5c;
+  border-color: rgba(217, 54, 110, 0.28);
+  background: rgba(217, 54, 110, 0.08);
+}
+html[data-theme="anime"] .archive__tags a:hover { color: var(--magenta); }
+html[data-theme="anime"] .sidecard {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.58);
+}
+html[data-theme="anime"] .sidecard__stats b { color: #23263c; }
+html[data-theme="anime"] .sidecard__tags a {
+  border-color: rgba(88, 70, 120, 0.18);
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.5);
+}
+html[data-theme="anime"] .sidecard__tags a:hover {
+  color: var(--cyan);
+  border-color: rgba(11, 147, 168, 0.45);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* 正文里如果有人写了 # 一级标题，也要有正常样式 */
+.prose h1 {
+  margin: 44px 0 18px;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.4;
+  color: #f2f8ff;
+}
+html[data-theme="anime"] .prose h1 { color: #1d2036; }

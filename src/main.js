@@ -393,6 +393,15 @@
       });
     });
     if (input) input.addEventListener("input", apply);
+
+    // 支持 /posts/index.html?tag=动效 直链（归档页的标签就是跳到这类地址）
+    var wanted = new URLSearchParams(location.search).get("tag");
+    if (wanted) {
+      var hit = filters.filter(function (b) {
+        return (b.dataset.filter || "").toLowerCase() === wanted.toLowerCase();
+      })[0];
+      if (hit) hit.click();
+    }
   }
 
   /* ---------------- 12. 背景主题切换（经典暗色 ⇄ 二次元亮色） ---------------- */
