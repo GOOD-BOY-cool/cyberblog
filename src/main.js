@@ -419,17 +419,38 @@
     var NAME = { cyber: "赛博", cartoon: "卡通", anime: "二次元" };
     var THEME_COLOR = { cyber: "#05060a", cartoon: "#eaf8ff", anime: "#fdf8fb" };
 
-    // 背景图按需加载：赛博用粒子画布，不需要图
+    // 背景按需加载：赛博用粒子画布不需要图；二次元是视频，切到才下载并播放
     function hydrate(theme) {
       if (theme === "cyber") return;
       var art = $(".bg-" + theme + "__art");
-      if (!art || art.getAttribute("src")) return;
-      if (art.dataset.src) art.setAttribute("src", art.dataset.src);
+      if (!art) return;
+
+      if (!art.getAttribute("src") && art.dataset.src) {
+        art.setAttribute("src", art.dataset.src);
+        if (art.tagName === "VIDEO") art.load();
+      }
+
+      if (art.tagName === "VIDEO") {
+        // 减少动效的用户只看封面帧，不播放
+        if (reduceMotion || theme !== "anime") {
+          art.pause();
+        } else {
+          var p = art.play();
+          if (p && p.catch) p.catch(function () {});
+        }
+      }
+    }
+
+    // 离开二次元时把视频停下来，别在后台烧 CPU
+    function pauseAnimeVideo() {
+      var v = $(".bg-anime__art");
+      if (v && v.tagName === "VIDEO" && !v.paused) v.pause();
     }
 
     function paint(theme) {
       if (ORDER.indexOf(theme) < 0) theme = "cyber";
       root.setAttribute("data-theme", theme);
+      if (theme !== "anime") pauseAnimeVideo();
       hydrate(theme);
 
       var next = ORDER[(ORDER.indexOf(theme) + 1) % ORDER.length];

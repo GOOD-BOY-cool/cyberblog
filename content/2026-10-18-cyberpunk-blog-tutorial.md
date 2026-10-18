@@ -779,18 +779,55 @@ Markdown 里直接写 `<img>` / `<video>` 是可行的，因为 `markdown-it` �
 
 实现上只解决三个问题：**动图怎么来**、**怎么铺满还不挡内容**、**亮色主题怎么不重写一遍 CSS**。
 
-### 1. 动图仍然是 SVG，不是 GIF
+### 1. 二次元背景是一条 2.6MB 的循环视频
 
-`public/assets/anime-bg.svg` 是一个 24KB 的 SMIL 动图：渐变天空、漂移的云、飘落的樱花（30 片，各自不同的时长与旋转速度）、会呼吸的太阳、闪烁的星芒。同等观感的 GIF 大概要 3MB，而且放大就糊。
+素材是 Wallpaper Engine 上一张 2560×1440、30fps、12 秒的插画动画，原始文件 **23.6MB、码率 15.7Mbps**。直接放进网页，等于让每个切到这个主题的访客先下 24MB，移动端基本卡死。
 
-### 2. 一个固定层 + 一层白纱
+用 ffmpeg 压到 720p、去掉音轨：
+
+```bash
+ffmpeg -i 初音.mp4 -an -vf "scale=1280:720:flags=lanczos" \
+  -c:v libx264 -profile:v main -crf 31 -preset slow \
+  -pix_fmt yuv420p -g 60 -movflags +faststart \
+  public/assets/miku-bg.mp4
+```
+
+23.6MB → **2.6MB**，而背景本身还要加模糊和半透明白纱，画质差异根本看不出来。再抽一帧当封面：
+
+```bash
+ffmpeg -ss 0.5 -i miku-bg.mp4 -frames:v 1 -q:v 4 miku-bg.jpg
+```
+
+几个参数值得记：`-crf 31` 是"够用"和"更小"的分界点，再高就开始出现色带；`-g 60` 让关键帧每 2 秒一个，循环回起点时不会卡；`-movflags +faststart` 把索引挪到文件头，浏览器不用下完整个文件就能开播。
+
+三种背景方案的真实取舍：
+
+| 方案 | 体积 | 观感 | 什么时候用 |
+|---|---|---|---|
+| GIF | 3~10MB | 256 色、边缘锯齿 | 永远别用 |
+| SVG + SMIL | 20KB | 矢量插画，只适合扁平风格 | 图形化背景（卡通天空那套） |
+| H.264 视频 | 2.6MB | 任意插画 / 实拍 | 真实画面（这张二次元壁纸） |
+
+### 2. 视频背景的四个必需属性
 
 ```html
 <div class="bg-anime" aria-hidden="true">
-  <img class="bg-anime__art" src="/assets/anime-bg.svg" alt="" width="1600" height="1000">
+  <video class="bg-anime__art"
+         data-src="/assets/miku-bg.mp4"
+         poster="/assets/miku-bg.jpg"
+         width="1280" height="720"
+         muted loop playsinline preload="none"
+         disablepictureinpicture></video>
   <span class="bg-anime__veil"></span>
 </div>
 ```
+
+- **`muted`** 不是可选项。缺了它，所有现代浏览器都会拒绝自动播放
+- **`playsinline`**：iOS Safari 不加这个，视频会强制全屏接管画面
+- **`preload="none"` + `data-src`**：用暗色主题的访客一个字节都不下载，切到二次元才挂 `src`
+- **`poster`**：视频解码出第一帧之前的占位，避免闪一下黑底
+
+播放也不能只靠 `autoplay`：切换主题时要 `pause()`，否则视频在后台一直解码烧 CPU；`prefers-reduced-motion: reduce` 的用户只显示 poster，不播放。
 
 ```css
 .bg-anime {

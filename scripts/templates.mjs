@@ -46,7 +46,7 @@ export function layout({ title, desc, body, root = '', boot = false }) {
   <span class="bg-cartoon__veil"></span>
 </div>
 <div class="bg-anime" aria-hidden="true">
-  <img class="bg-anime__art" data-src="/assets/anime-bg.svg" alt="" width="1600" height="1000" decoding="async">
+  <video class="bg-anime__art" data-src="/assets/miku-bg.mp4" poster="/assets/miku-bg.jpg" width="1280" height="720" muted loop playsinline preload="none" disablepictureinpicture></video>
   <span class="bg-anime__veil"></span>
 </div>
 <div class="fx fx--scanlines" aria-hidden="true"></div>

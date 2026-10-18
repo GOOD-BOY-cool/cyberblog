@@ -1767,6 +1767,59 @@ html[data-theme="anime"] .btn--ghost {
   .theme-toggle { padding: 10px; border-radius: 50%; }
 }
 
+
+/* ---------- 20. 二次元（视频背景）下的文字可读性 ---------- */
+/* 背景是彩色插画视频，正文区一律加玻璃贴纸，保证对比度 */
+html[data-theme="anime"] .glitch {
+  color: #14172b;
+  text-shadow:
+    0 2px 22px rgba(255, 255, 255, 0.95),
+    0 4px 40px rgba(255, 255, 255, 0.8);
+}
+html[data-theme="anime"] .hero__type {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 7px 17px;
+  border-radius: 999px;
+  color: #0f6b7d;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px) saturate(1.1);
+  box-shadow: 0 8px 26px -20px rgba(40, 30, 70, 0.7);
+}
+html[data-theme="anime"] .hero__desc {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 11px 20px;
+  border-radius: 18px;
+  color: #35384f;
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(12px) saturate(1.1);
+  box-shadow: 0 10px 30px -24px rgba(40, 30, 70, 0.7);
+}
+html[data-theme="anime"] .hero__stats {
+  margin-top: 34px;
+  padding: 18px 22px;
+  border: 0;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: 0 14px 40px -30px rgba(40, 30, 70, 0.75);
+}
+html[data-theme="anime"] .hero__stats b { color: #14172b; }
+html[data-theme="anime"] .hero__stats span { color: #54587a; }
+html[data-theme="anime"] .chip {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+}
+html[data-theme="anime"] .btn--ghost {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+}
+html[data-theme="anime"] .scroll-hint {
+  color: #3d415e;
+  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.9);
+}
+
 /* ---------- 10. motion preferences ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -2104,15 +2157,17 @@ html[data-theme="anime"] .comments__setup code {
 /* ---------- 16. 亮色主题：壁纸 + 毛玻璃（参考 Fuwari 的观感） ---------- */
 /* 背景：给 SVG 加模糊与轻微放大，模拟「壁纸虚化」的效果 */
 html[data-theme="anime"] .bg-anime__art {
-  filter: blur(5px) saturate(1.18) brightness(1.03);
-  transform: scale(1.06);
+  display: block;
+  background: #eef6ff;
+  filter: blur(3.5px) saturate(1.06) brightness(1.04);
+  transform: scale(1.05);
 }
 html[data-theme="anime"] .bg-anime__veil {
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.34) 0%,
-    rgba(255, 251, 253, 0.46) 42%,
-    rgba(255, 255, 255, 0.62) 100%
+    rgba(255, 255, 255, 0.36) 0%,
+    rgba(255, 251, 253, 0.46) 44%,
+    rgba(255, 255, 255, 0.66) 100%
   );
 }
 
@@ -2583,3 +2638,97 @@ html[data-theme="cartoon"] .hero__type {
   box-shadow: 3px 3px 0 rgba(43, 43, 58, 0.08);
 }
 html[data-theme="cartoon"] .hero__desc { margin-top: 14px; }
+
+/* ---------- 21. 二次元（视频背景）：正文内容统一卡片化 ---------- */
+/* 视频背景颜色饱和，所有长文本容器都必须有载体，否则读不了 */
+html[data-theme="anime"] .post__layout .prose {
+  padding: 34px 36px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px -48px rgba(50, 30, 80, 0.7);
+}
+html[data-theme="anime"] .post__title {
+  color: #14172b;
+  text-shadow:
+    0 2px 22px rgba(255, 255, 255, 0.95),
+    0 4px 44px rgba(255, 255, 255, 0.85);
+}
+html[data-theme="anime"] .post__meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: #43476a;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+}
+html[data-theme="anime"] .post__banner {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+}
+html[data-theme="anime"] .post__banner img { opacity: 0.85; }
+
+html[data-theme="anime"] .archive {
+  padding: 26px 28px;
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(18px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px -48px rgba(50, 30, 80, 0.65);
+}
+html[data-theme="anime"] .about__facts {
+  padding: 22px 26px;
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 20px;
+}
+html[data-theme="anime"] .timeline {
+  padding: 22px 26px;
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 20px;
+}
+html[data-theme="anime"] .comments__head { border-top-color: rgba(255, 255, 255, 0.6); }
+html[data-theme="anime"] .comments__title {
+  color: #14172b;
+  text-shadow: 0 2px 18px rgba(255, 255, 255, 0.95);
+}
+html[data-theme="anime"] .comments__hint {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #43476a;
+}
+html[data-theme="anime"] .section__head h2,
+html[data-theme="anime"] .page-title {
+  color: #14172b;
+  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.95);
+}
+html[data-theme="anime"] .page-sub {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #43476a;
+}
+@media (max-width: 640px) {
+  html[data-theme="anime"] .post__layout .prose { padding: 22px 18px; border-radius: 18px; }
+  html[data-theme="anime"] .archive { padding: 18px 16px; border-radius: 18px; }
+}
+html[data-theme="anime"] .toc {
+  padding: 18px 20px;
+  border-left: 0;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+}
+html[data-theme="anime"] .toc a { color: #54587a; }
+html[data-theme="anime"] .toc a:hover,
+html[data-theme="anime"] .toc a.is-active { color: var(--magenta); }
