@@ -1466,7 +1466,10 @@ html.js [data-reveal].is-visible {
   height: 100%;
   object-fit: cover; /* 铺满，保持比例，多余部分裁切 */
   object-position: 50% 42%;
+  opacity: 0;
+  transition: opacity 0.5s ease; /* 懒加载完成后再淡入，避免半张图突现 */
 }
+.bg-anime__art[src] { opacity: 1; }
 /* 柔化层：把动图压成浅底，保证前景文字对比度 */
 .bg-anime__veil {
   position: absolute;

@@ -405,8 +405,17 @@
     var KEY = "neon-theme";
     var timer = null;
 
+    // 背景图按需加载：只有真的切到二次元主题才下载这 24KB
+    var art = $(".bg-anime__art");
+    function hydrateArt() {
+      if (!art || art.getAttribute("src")) return;
+      var src = art.dataset.src;
+      if (src) art.setAttribute("src", src);
+    }
+
     function paint(theme) {
       var isAnime = theme === "anime";
+      if (isAnime) hydrateArt();
       if (isAnime) root.setAttribute("data-theme", "anime");
       else root.removeAttribute("data-theme");
       btn.setAttribute("aria-pressed", isAnime ? "true" : "false");
