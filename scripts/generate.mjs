@@ -8,10 +8,12 @@ import { ROOT, readPosts } from './content.mjs'
 import { buildIndex, buildList, buildPost, buildAbout, buildNotFound } from './templates.mjs'
 import { SITE } from './site.config.mjs'
 
-export { ROOT }
+// generateSite() 已经把全部文章解析过一遍，构建收尾阶段直接复用，避免重复解析
+let cachedPosts = null
 
 export function generateSite() {
   const posts = readPosts()
+  cachedPosts = posts
   const pages = new Map()
 
   pages.set('index', buildIndex(posts))
@@ -34,7 +36,7 @@ export function generateSite() {
 
 /** 构建结束后写进 dist 的附属文件 */
 export function emitStatic(outDir) {
-  const posts = readPosts()
+  const posts = cachedPosts ?? readPosts()
   const base = SITE.url.replace(/\/$/, '')
   const urls = [
     { loc: '/', prio: '1.0' },

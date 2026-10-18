@@ -5,7 +5,8 @@
  * - writeBundle    构建后补写 sitemap / robots / feed / .nojekyll
  */
 import path from 'node:path'
-import { ROOT, generateSite, emitStatic } from './generate.mjs'
+import { ROOT } from './content.mjs'
+import { generateSite, emitStatic } from './generate.mjs'
 
 export function cyberblog() {
   return {

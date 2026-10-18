@@ -8,10 +8,7 @@
 
 /* ---------- 1. tokens ---------- */
 :root {
-  --bg: #05060a;
-  --bg-2: #080b14;
   --panel: rgba(12, 17, 29, 0.72);
-  --panel-2: rgba(9, 13, 23, 0.9);
   --text: #d8e4f5;
   --text-dim: #93a1ba;
   --muted: #6d7a93;
@@ -20,7 +17,6 @@
   --violet: #8b5cff;
   --amber: #ffd60a;
   --line: rgba(120, 220, 255, 0.14);
-  --line-strong: rgba(120, 220, 255, 0.3);
   --font-display: "Orbitron", "Rajdhani", "Bahnschrift", "Segoe UI", system-ui, sans-serif;
   --font-sans: "Inter", "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Cascadia Code", Consolas, "SF Mono", ui-monospace, monospace;
@@ -778,13 +774,6 @@ body.has-pointer .cursor-glow { opacity: 1; }
 .term__prompt { color: var(--magenta); margin-right: 8px; }
 .term__out { color: var(--text-dim); padding-left: 18px; }
 .term__out--ok { color: #4dffa6; }
-.term__caret {
-  display: inline-block;
-  width: 7px; height: 13px;
-  background: var(--cyan);
-  vertical-align: -2px;
-  animation: caret-blink 1s steps(1) infinite;
-}
 
 .signal { padding: 16px; }
 .signal__img { width: 100%; opacity: 0.9; mix-blend-mode: screen; }
@@ -1051,15 +1040,6 @@ body.has-pointer .cursor-glow { opacity: 1; }
 .prose ol { margin: 16px 0; padding-left: 1.5em; }
 .prose li { margin: 8px 0; }
 .prose li::marker { color: var(--magenta); font-family: var(--font-mono); }
-.prose li.task { list-style: none; margin-left: -1.2em; }
-.prose li.task i {
-  font-style: normal;
-  margin-right: 9px;
-  color: var(--cyan);
-  font-size: 13px;
-}
-.prose li.task--done i { color: #4dffa6; }
-.prose li.task--done { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(255, 45, 120, 0.5); }
 .prose hr {
   height: 1px;
   margin: 44px 0;

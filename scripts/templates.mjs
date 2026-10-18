@@ -8,9 +8,9 @@ const esc = (s) => String(s ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<'
 const escAttr = (s) => esc(s).replace(/"/g, '&quot;')
 
 /* ---------------------------------------------------------------- 骨架层 */
-export function layout({ title, desc, body, root = '', pageId, boot = false }) {
+export function layout({ title, desc, body, root = '', boot = false }) {
   return `<!DOCTYPE html>
-<html lang="${SITE.locale}" data-page="${pageId}">
+<html lang="${SITE.locale}">
 <head>
 <meta charset="UTF-8">
 <script>document.documentElement.classList.add("js");</script>
@@ -101,7 +101,7 @@ const HERO = (postCount) => `<section class="hero">
         <a class="btn btn--primary" href="posts/index.html"><span>进入日志</span><i>&#8594;</i></a>
         <a class="btn btn--ghost" href="about.html">关于作者</a>
       </div>
-      <ul class="hero__stats" data-count-group>
+      <ul class="hero__stats">
         <li><b data-count="${postCount}">0</b><span>LOGS</span></li>
         <li><b data-count="16">0</b><span>ANIM</span></li>
         <li><b data-count="60">0</b><span>FPS</span></li>
@@ -123,7 +123,7 @@ const TERMINAL = `<section class="section">
     <div class="duo">
       <div class="panel panel--term" data-reveal>
         <div class="panel__bar"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i><span class="mono">~/neon-edge — zsh</span></div>
-        <div class="term" id="term">
+        <div class="term">
           <p class="term__line"><span class="term__prompt">$</span> whoami</p>
           <p class="term__line term__out">${esc(SITE.role)}</p>
           <p class="term__line"><span class="term__prompt">$</span> cat stack.txt</p>
@@ -199,7 +199,6 @@ export function buildIndex(posts) {
     desc: SITE.desc,
     body,
     root: '',
-    pageId: 'index',
     boot: true,
   })
 }
@@ -233,7 +232,7 @@ export function buildList(posts) {
 <section class="section section--flush">
   <div class="container">
     <div class="toolbar" data-reveal>
-      <div class="filters" id="filters">${chips}</div>
+      <div class="filters">${chips}</div>
       <label class="search">
         <span aria-hidden="true">&#9906;</span>
         <input id="post-search" type="search" placeholder="搜索标题 / 摘要…" autocomplete="off" aria-label="搜索文章">
@@ -249,7 +248,6 @@ export function buildList(posts) {
     desc: '全部日志归档，支持标签过滤与搜索。',
     body,
     root: '../',
-    pageId: 'list',
   })
 }
 
@@ -302,7 +300,6 @@ export function buildPost(post, prev, next) {
     desc: post.summary || SITE.desc,
     body,
     root: '../',
-    pageId: 'post',
   })
 }
 
@@ -357,7 +354,6 @@ export function buildAbout(posts) {
     desc: '关于作者与这个博客。',
     body,
     root: '',
-    pageId: 'about',
   })
 }
 
@@ -377,6 +373,5 @@ export function buildNotFound() {
     desc: '页面不存在。',
     body,
     root: '/',
-    pageId: '404',
   })
 }

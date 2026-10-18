@@ -21,11 +21,9 @@ function readingTime(text) {
   return Math.max(1, Math.round(zh / 350 + en / 200))
 }
 
-/** @returns {{slug:string,title:string,date:string,tags:string[],summary:string,body:string,html:string,toc:object[],minutes:number,accent:string}[]} */
+/** @returns {{slug:string,title:string,date:string,tags:string[],summary:string,html:string,toc:object[],minutes:number,accent:string}[]} */
 export function readPosts() {
-  const files = fs
-    .readdirSync(CONTENT_DIR)
-    .filter((f) => f.endsWith('.md'))
+  const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith('.md'))
 
   const posts = files.map((file) => {
     const raw = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf8').replace(/\r\n/g, '\n')
@@ -43,11 +41,10 @@ export function readPosts() {
             .map((t) => t.trim())
             .filter(Boolean),
       summary: data.summary || '',
-      body: content,
       html,
       toc,
       minutes: readingTime(content),
-      accent: 'cyan',
+      accent: 'cyan', // 先占位，下面按排序结果轮换
     }
   })
 
@@ -56,13 +53,4 @@ export function readPosts() {
     post.accent = SITE.accents[i % SITE.accents.length]
   })
   return posts
-}
-
-/** 全站标签统计，用于归档页的过滤条 */
-export function collectTags(posts) {
-  const map = new Map()
-  for (const post of posts) {
-    for (const tag of post.tags) map.set(tag, (map.get(tag) || 0) + 1)
-  }
-  return [...map.entries()].map(([name, count]) => ({ name, count }))
 }

@@ -168,10 +168,8 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        var el = entry.target;
-        var delay = el.dataset.revealDelay || 0;
-        setTimeout(function () { el.classList.add("is-visible"); }, delay);
-        io.unobserve(el);
+        entry.target.classList.add("is-visible");
+        io.unobserve(entry.target);
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
     items.forEach(function (el) { io.observe(el); });
