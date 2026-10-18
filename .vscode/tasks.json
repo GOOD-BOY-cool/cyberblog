@@ -1,5 +1,13 @@
 {
   "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "commitMsg",
+      "type": "promptString",
+      "description": "提交说明（例如：post: CSS Grid 踩坑 / fix: 导航换行）",
+      "default": "post: 更新内容"
+    }
+  ],
   "tasks": [
     {
       "label": "dev",
@@ -30,8 +38,18 @@
       "label": "preview(构建产物)",
       "type": "shell",
       "command": "npm run build && npm run preview",
+      "options": { "shell": { "executable": "cmd.exe", "args": ["/d", "/c"] } },
       "problemMatcher": [],
       "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "发布（构建 + 提交 + 推送）",
+      "detail": "本地先构建校验，再 git add / commit / push，GitHub Actions 自动上线",
+      "type": "shell",
+      "command": "npm run build && git add -A && (git diff --cached --quiet || git commit -m \"${input:commitMsg}\") && git push",
+      "options": { "shell": { "executable": "cmd.exe", "args": ["/d", "/c"] } },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
     }
   ]
 }
