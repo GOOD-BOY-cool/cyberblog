@@ -56,6 +56,7 @@ code cyberblog      # 或在 VSCode 里 File → Open Folder 选中 cyberblog
 | `npm run dev` | 开发服务器（HMR + md 热重建），端口 4321 |
 | `npm run build` | 构建到 `dist/` |
 | `npm run preview` | 用静态服务器预览 `dist/`（和线上一致） |
+| `npm run stop` | 关掉占用 4321 的本地服务（终端关了/进程找不到时用） |
 | `npm run clean` | 删除 `dist/` |
 
 ## 写一篇新文章
