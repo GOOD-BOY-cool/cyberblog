@@ -5,6 +5,7 @@
 - **构建**：Vite 7 + markdown-it（构建期依赖 4 个，产物零运行时依赖）
 - **内容**：`content/*.md` + front matter，改完 push 就发布
 - **动效**：原生 CSS 动画 + 原生 JS + SMIL 动画 SVG（没有一张 GIF，动图仅 12KB）
+- **双背景**：右下角按钮一键在「经典暗色」与「亮色二次元」之间切换，0.55s 交叉淡入、无刷新、localStorage 记忆
 - **部署**：纯静态，GitHub Pages / Netlify / Vercel / Cloudflare / Nginx 都能跑
 
 > 完整施工教程就在站点里：`content/2026-10-18-cyberpunk-blog-tutorial.md`
@@ -68,11 +69,20 @@ EOF
 ```
 content/          文章源文件（唯一需要天天动的目录）
 scripts/          构建器：markdown 渲染 / 模板 / 页面生成 / Vite 插件
-src/main.js       交互层：粒子、打字机、进场、倾斜、搜索过滤
-src/styles/       cyber.css：设计系统 + 全部 CSS 动画 + 代码高亮配色
-public/assets/    SVG 动图、logo、favicon（原样拷贝进 dist）
+src/main.js       交互层：粒子、打字机、进场、倾斜、搜索过滤、背景切换
+src/styles/       cyber.css：设计系统 + 全部 CSS 动画 + 代码高亮 + 亮色主题
+public/assets/    SVG 动图（含二次元背景）、logo、favicon（原样拷贝进 dist）
 dist/             构建产物，可直接部署
 ```
+
+## 背景切换
+
+右下角固定按钮：经典暗色 ⇄ 亮色二次元。点击即时生效，不刷新页面，选择记在 `localStorage`（key：`neon-theme`），刷新后保持；首次加载由 `<head>` 里的内联脚本提前写入 `data-theme`，不会闪一下暗色。
+
+- **背景图**：`public/assets/anime-bg.svg` —— 纯 SMIL 动图（流云 / 樱花 / 光斑 / 太阳），24KB，无限缩放不糊
+- **换成自己的图**：把 gif / webp / mp4 丢进 `public/assets/`，改 `scripts/templates.mjs` 里 `.bg-anime__art` 的 `src` 即可；`object-fit: cover` 已保证铺满
+- **铺满与可读性**：`.bg-anime` 是固定层，`z-index: 0` + `pointer-events: none`，不挡滚动与点击；上面盖一层 `.bg-anime__veil`（白色 24%→64% 渐变）压住背景，配合亮色文字令牌保证对比度
+- **配色**：亮色主题的所有颜色都在 `cyber.css` 的 `html[data-theme="anime"]` 块里，改令牌即可整体换肤
 
 ## 部署
 
@@ -86,6 +96,6 @@ dist/             构建产物，可直接部署
 ## 自定义
 
 - 站点标题 / 作者 / 域名 / 邮箱 → `scripts/site.config.mjs`
-- 配色 → `src/styles/cyber.css` 顶部 `:root`（`--cyan` `--magenta` `--violet` `--amber`）
+- 配色 → `src/styles/cyber.css` 顶部 `:root`（`--cyan` `--magenta` `--violet` `--amber`）；亮色主题在同文件的 `html[data-theme="anime"]`
 - 动效开关 → `src/main.js` 里的 `reduceMotion` / `finePointer` 判断
 - 字体 → `scripts/templates.mjs` 里的 Google Fonts `<link>`，或换成本地 woff2

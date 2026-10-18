@@ -772,3 +772,91 @@ Markdown 里直接写 `<img>` / `<video>` 是可行的，因为 `markdown-it` �
 > 赛博朋克的视觉内核不是「东西多」，而是「信息在噪声中依然能被读清」。所有霓虹、故障、扫描线，都服务于这一件事。动画是修辞，不是内容。
 
 到这里你已经有一套可复用的模板：改 `src/styles/cyber.css` 里的 `--cyan` / `--magenta` 就是另一套冷色或毒性绿视觉，换掉 `content/` 就是另一个博客。剩下的，就是持续往里写东西。
+
+## 十、加餐：亮色「二次元」背景与一键切换
+
+暗色看久了会想换个口味，所以站里加了一个右下角的切换按钮：**经典暗色 ⇄ 亮色二次元**，点一下 0.55 秒交叉淡入，不刷新页面，选择记在 `localStorage`。
+
+实现上只解决三个问题：**动图怎么来**、**怎么铺满还不挡内容**、**亮色主题怎么不重写一遍 CSS**。
+
+### 1. 动图仍然是 SVG，不是 GIF
+
+`public/assets/anime-bg.svg` 是一个 24KB 的 SMIL 动图：渐变天空、漂移的云、飘落的樱花（30 片，各自不同的时长与旋转速度）、会呼吸的太阳、闪烁的星芒。同等观感的 GIF 大概要 3MB，而且放大就糊。
+
+### 2. 一个固定层 + 一层白纱
+
+```html
+<div class="bg-anime" aria-hidden="true">
+  <img class="bg-anime__art" src="/assets/anime-bg.svg" alt="" width="1600" height="1000">
+  <span class="bg-anime__veil"></span>
+</div>
+```
+
+```css
+.bg-anime {
+  position: fixed; inset: 0; z-index: 0;
+  opacity: 0; visibility: hidden;
+  pointer-events: none;                    /* 关键：不拦截滚动和点击 */
+  transition: opacity .55s var(--ease), visibility .55s;
+}
+.bg-anime__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bg-anime__veil {                          /* 把动图压成浅底，保证文字对比度 */
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,250,252,.42) 46%, rgba(255,255,255,.64));
+}
+html[data-theme="anime"] .bg-anime { opacity: 1; visibility: visible; }
+html[data-theme="anime"] #bg-canvas { opacity: 0; }   /* 粒子星网在亮色下会变脏，淡出 */
+```
+
+三个细节：
+
+- `object-fit: cover` 保证任意屏幕比例都铺满，不拉伸、留白；`object-position: 50% 42%` 让视觉重心落在太阳与天空，而不是被裁在底部。
+- `pointer-events: none` 是必须的。背景层一旦能接收事件，整页的 hover、点击、滚动都会被它吃掉。
+- 白色柔化层是**可读性的保险**：亮色主题下正文直接用深灰 `#33374f`，配 24%~64% 的白纱，对比度稳定在 7:1 以上。
+
+### 3. 主题 = 一套 CSS 变量 + 一段临时过渡
+
+亮色主题没有重写组件，只覆盖令牌：
+
+```css
+html[data-theme="anime"] {
+  --text: #2c2f45;
+  --text-dim: #4b4f68;
+  --muted: #6d7190;
+  --cyan: #0b93a8;      /* 霓虹青在浅底上会糊，需要压深 */
+  --magenta: #d9366e;
+  --panel: rgba(255, 255, 255, .76);
+}
+```
+
+然后是几十条 `html[data-theme="anime"] .xxx` 的定点修正——因为暗色主题里有些颜色是写死的（`.card` 的渐变、`.prose` 的 `#c9d6e8`、`.post__title` 的 `#f4f9ff`）。这是纯暗色设计切亮色必然要付的成本：**变量能覆盖的用变量，写死的老老实实补一条**。
+
+切换的平滑感来自一个「临时全局过渡」：
+
+```js
+root.classList.add('is-theme-switching');
+setTimeout(() => root.classList.remove('is-theme-switching'), 620);
+```
+
+```css
+html.is-theme-switching *,
+html.is-theme-switching *::before,
+html.is-theme-switching *::after {
+  transition: background-color .55s var(--ease), color .55s var(--ease),
+              border-color .55s var(--ease), opacity .55s var(--ease) !important;
+}
+```
+
+只在切换的那 620ms 里给所有元素挂上颜色过渡，之后立刻摘掉。这样既拿到了「整页一起渐变」的效果，又不会让 hover、折叠、倾斜这些常规动画被 `transition: all` 拖慢。
+
+### 4. 两个必须踩过的坑
+
+- **刷新会闪回暗色**：`data-theme` 是 JS 加的，而 JS 在 `<body>` 末尾才执行，首帧一定是暗的。解法是把读取 `localStorage` 的脚本内联进 `<head>`，早于 CSS 生效：
+
+  ```html
+  <script>(function(){try{if(localStorage.getItem("neon-theme")==="anime")document.documentElement.setAttribute("data-theme","anime")}catch(e){}})();</script>
+  ```
+
+- **减少了动效的用户不该看到淡入**：`prefers-reduced-motion: reduce` 时把 `.bg-anime` 的 `transition` 直接关掉，切换变成立即生效。功能不减，只是不再渐变。
+
+按钮本身也做了三件事：图标与文案随主题反转（太阳/「二次元」⇄ 月亮/「经典」）、`aria-pressed` 同步状态、`mobile` 下缩到 14px 边距并在 380px 以下退化成纯图标圆钮。

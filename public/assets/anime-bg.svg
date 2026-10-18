@@ -1,0 +1,431 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="亮色二次元天空：流云、樱花花瓣与光斑">
+  <defs>
+    <linearGradient id="an-sky" x1="0.1" y1="0" x2="0.55" y2="1">
+      <stop offset="0%" stop-color="#a9d6ff"/>
+      <stop offset="34%" stop-color="#cfe4ff"/>
+      <stop offset="58%" stop-color="#ffd3e7"/>
+      <stop offset="82%" stop-color="#ffe2cd"/>
+      <stop offset="100%" stop-color="#fff4e6"/>
+    </linearGradient>
+    <radialGradient id="an-sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fffdf4" stop-opacity="1"/>
+      <stop offset="42%" stop-color="#ffeab8" stop-opacity=".85"/>
+      <stop offset="100%" stop-color="#ffd39a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="an-cloud" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".98"/>
+      <stop offset="100%" stop-color="#ffe9f4" stop-opacity=".62"/>
+    </linearGradient>
+    <linearGradient id="an-hill-far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b9a6ee" stop-opacity=".78"/>
+      <stop offset="100%" stop-color="#d9cbff" stop-opacity=".42"/>
+    </linearGradient>
+    <linearGradient id="an-hill-near" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff9fc4" stop-opacity=".82"/>
+      <stop offset="100%" stop-color="#ffd0e2" stop-opacity=".5"/>
+    </linearGradient>
+    <linearGradient id="an-bottom" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fffaf6" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#fffaf6" stop-opacity=".72"/>
+    </linearGradient>
+    <radialGradient id="an-bokeh" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".95"/>
+      <stop offset="55%" stop-color="#ffe3f3" stop-opacity=".5"/>
+      <stop offset="100%" stop-color="#ffd0ea" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#an-sky)"/>
+
+  <g>
+    <circle cx="1245" cy="190" r="360" fill="url(#an-sun)" opacity=".9">
+      <animate attributeName="opacity" values="0.78;1;0.78" dur="9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1245" cy="190" r="104" fill="#fffaea" opacity=".95">
+      <animate attributeName="r" values="100;110;100" dur="7.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g transform="translate(1245 190)" opacity=".6">
+    <animateTransform attributeName="transform" type="rotate" values="0 1245 190;360 1245 190" dur="200s" repeatCount="indefinite" additive="sum"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.12" transform="rotate(0.0)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.18" transform="rotate(25.7)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.24" transform="rotate(51.4)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.12" transform="rotate(77.1)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.18" transform="rotate(102.9)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.24" transform="rotate(128.6)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.12" transform="rotate(154.3)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.18" transform="rotate(180.0)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.24" transform="rotate(205.7)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.12" transform="rotate(231.4)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.18" transform="rotate(257.1)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.24" transform="rotate(282.9)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.12" transform="rotate(308.6)"/>
+      <rect x="1239" y="-380" width="13" height="380" rx="6.5" fill="#fff4d2" opacity="0.18" transform="rotate(334.3)"/>
+  </g>
+
+  <g transform="translate(90 140) scale(1.55)" opacity="0.95">
+    <animateTransform attributeName="transform" type="translate" values="90,140;230,130;90,140" dur="52s" repeatCount="indefinite" additive="sum"/>
+    <path d="M0 44 C12 10 50 2 74 20 C90 -8 136 -10 154 18 C184 8 214 26 216 50 C230 58 224 68 206 68 L16 68 C-8 68 -14 54 0 44 Z" fill="url(#an-cloud)"/>
+  </g>
+
+  <g transform="translate(700 96) scale(1.0)" opacity="0.85">
+    <animateTransform attributeName="transform" type="translate" values="700,96;830,86;700,96" dur="64s" repeatCount="indefinite" additive="sum"/>
+    <path d="M0 44 C12 10 50 2 74 20 C90 -8 136 -10 154 18 C184 8 214 26 216 50 C230 58 224 68 206 68 L16 68 C-8 68 -14 54 0 44 Z" fill="url(#an-cloud)"/>
+  </g>
+
+  <g transform="translate(330 330) scale(0.72)" opacity="0.7">
+    <animateTransform attributeName="transform" type="translate" values="330,330;400,320;330,330" dur="40s" repeatCount="indefinite" additive="sum"/>
+    <path d="M0 44 C12 10 50 2 74 20 C90 -8 136 -10 154 18 C184 8 214 26 216 50 C230 58 224 68 206 68 L16 68 C-8 68 -14 54 0 44 Z" fill="url(#an-cloud)"/>
+  </g>
+
+  <g transform="translate(1010 392) scale(0.9)" opacity="0.6">
+    <animateTransform attributeName="transform" type="translate" values="1010,392;1090,382;1010,392" dur="70s" repeatCount="indefinite" additive="sum"/>
+    <path d="M0 44 C12 10 50 2 74 20 C90 -8 136 -10 154 18 C184 8 214 26 216 50 C230 58 224 68 206 68 L16 68 C-8 68 -14 54 0 44 Z" fill="url(#an-cloud)"/>
+  </g>
+
+  <g>
+    <path d="M0 812 C200 726 330 776 470 812 C616 850 720 782 900 802 C1080 822 1240 742 1600 782 L1600 1000 L0 1000 Z" fill="url(#an-hill-far)"/>
+    <path d="M0 878 C240 828 420 868 640 883 C860 898 1080 848 1300 873 C1420 886 1520 868 1600 860 L1600 1000 L0 1000 Z" fill="url(#an-hill-near)"/>
+  </g>
+
+  <g opacity="0.82">
+    <animateTransform attributeName="transform" type="translate" values="774,-223;856,957" dur="13.8s" begin="-0.3s" repeatCount="indefinite"/>
+    <g transform="translate(774 -223) scale(1.53)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="5.8s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.72">
+    <animateTransform attributeName="transform" type="translate" values="418,-258;580,922" dur="18.0s" begin="-8.8s" repeatCount="indefinite"/>
+    <g transform="translate(418 -258) scale(1.99)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="7.5s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffc6dd"/>
+    </g>
+  </g>
+
+  <g opacity="0.9">
+    <animateTransform attributeName="transform" type="translate" values="295,-259;438,921" dur="20.6s" begin="-1.2s" repeatCount="indefinite"/>
+    <g transform="translate(295 -259) scale(1.70)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="8.6s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.56">
+    <animateTransform attributeName="transform" type="translate" values="321,-313;517,867" dur="21.8s" begin="-13.0s" repeatCount="indefinite"/>
+    <g transform="translate(321 -313) scale(2.38)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="9.1s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.56">
+    <animateTransform attributeName="transform" type="translate" values="1404,-127;1521,1053" dur="16.7s" begin="-1.4s" repeatCount="indefinite"/>
+    <g transform="translate(1404 -127) scale(1.77)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="7.0s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.76">
+    <animateTransform attributeName="transform" type="translate" values="837,-161;943,1019" dur="18.5s" begin="-17.7s" repeatCount="indefinite"/>
+    <g transform="translate(837 -161) scale(2.03)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="7.7s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.83">
+    <animateTransform attributeName="transform" type="translate" values="545,-148;631,1032" dur="21.8s" begin="-7.3s" repeatCount="indefinite"/>
+    <g transform="translate(545 -148) scale(2.02)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="9.1s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffc6dd"/>
+    </g>
+  </g>
+
+  <g opacity="0.74">
+    <animateTransform attributeName="transform" type="translate" values="1195,-121;1360,1059" dur="15.1s" begin="-8.6s" repeatCount="indefinite"/>
+    <g transform="translate(1195 -121) scale(1.31)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="6.3s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffc6dd"/>
+    </g>
+  </g>
+
+  <g opacity="0.76">
+    <animateTransform attributeName="transform" type="translate" values="848,-206;1010,974" dur="20.2s" begin="-0.7s" repeatCount="indefinite"/>
+    <g transform="translate(848 -206) scale(2.30)">
+      <animateTransform attributeName="transform" type="rotate" values="0;260" dur="8.4s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffc6dd"/>
+    </g>
+  </g>
+
+  <g opacity="0.64">
+    <animateTransform attributeName="transform" type="translate" values="125,-36;256,1144" dur="15.1s" begin="-0.6s" repeatCount="indefinite"/>
+    <g transform="translate(125 -36) scale(1.17)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="6.3s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff9ec6"/>
+    </g>
+  </g>
+
+  <g opacity="0.83">
+    <animateTransform attributeName="transform" type="translate" values="853,-79;1064,1101" dur="18.4s" begin="-0.9s" repeatCount="indefinite"/>
+    <g transform="translate(853 -79) scale(2.28)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="7.7s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.66">
+    <animateTransform attributeName="transform" type="translate" values="575,-176;767,1004" dur="19.0s" begin="-10.6s" repeatCount="indefinite"/>
+    <g transform="translate(575 -176) scale(1.22)">
+      <animateTransform attributeName="transform" type="rotate" values="0;260" dur="7.9s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff9ec6"/>
+    </g>
+  </g>
+
+  <g opacity="0.76">
+    <animateTransform attributeName="transform" type="translate" values="47,-154;173,1026" dur="18.9s" begin="-18.2s" repeatCount="indefinite"/>
+    <g transform="translate(47 -154) scale(1.32)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="7.9s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.95">
+    <animateTransform attributeName="transform" type="translate" values="1140,-123;1313,1057" dur="20.7s" begin="-0.7s" repeatCount="indefinite"/>
+    <g transform="translate(1140 -123) scale(1.42)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="8.6s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.79">
+    <animateTransform attributeName="transform" type="translate" values="697,-131;916,1049" dur="18.9s" begin="-8.0s" repeatCount="indefinite"/>
+    <g transform="translate(697 -131) scale(1.68)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="7.9s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.94">
+    <animateTransform attributeName="transform" type="translate" values="597,-221;760,959" dur="13.8s" begin="-6.0s" repeatCount="indefinite"/>
+    <g transform="translate(597 -221) scale(1.58)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="5.8s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.82">
+    <animateTransform attributeName="transform" type="translate" values="380,-312;484,868" dur="13.3s" begin="-3.7s" repeatCount="indefinite"/>
+    <g transform="translate(380 -312) scale(2.17)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="5.5s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.81">
+    <animateTransform attributeName="transform" type="translate" values="1345,-165;1458,1015" dur="21.9s" begin="-9.0s" repeatCount="indefinite"/>
+    <g transform="translate(1345 -165) scale(1.37)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="9.1s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.6">
+    <animateTransform attributeName="transform" type="translate" values="1533,-237;1747,943" dur="13.6s" begin="-6.7s" repeatCount="indefinite"/>
+    <g transform="translate(1533 -237) scale(1.98)">
+      <animateTransform attributeName="transform" type="rotate" values="0;260" dur="5.7s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.93">
+    <animateTransform attributeName="transform" type="translate" values="112,-205;256,975" dur="17.5s" begin="-13.9s" repeatCount="indefinite"/>
+    <g transform="translate(112 -205) scale(1.54)">
+      <animateTransform attributeName="transform" type="rotate" values="0;340" dur="7.3s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.95">
+    <animateTransform attributeName="transform" type="translate" values="747,-123;890,1057" dur="21.3s" begin="-6.2s" repeatCount="indefinite"/>
+    <g transform="translate(747 -123) scale(2.13)">
+      <animateTransform attributeName="transform" type="rotate" values="0;260" dur="8.9s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.87">
+    <animateTransform attributeName="transform" type="translate" values="68,-287;200,893" dur="19.8s" begin="-6.3s" repeatCount="indefinite"/>
+    <g transform="translate(68 -287) scale(2.17)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="8.3s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.88">
+    <animateTransform attributeName="transform" type="translate" values="882,-95;1041,1085" dur="13.2s" begin="-2.4s" repeatCount="indefinite"/>
+    <g transform="translate(882 -95) scale(2.11)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="5.5s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.62">
+    <animateTransform attributeName="transform" type="translate" values="563,-127;726,1053" dur="20.9s" begin="-5.6s" repeatCount="indefinite"/>
+    <g transform="translate(563 -127) scale(2.15)">
+      <animateTransform attributeName="transform" type="rotate" values="0;260" dur="8.7s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.83">
+    <animateTransform attributeName="transform" type="translate" values="1218,-211;1353,969" dur="21.9s" begin="-1.7s" repeatCount="indefinite"/>
+    <g transform="translate(1218 -211) scale(1.88)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="9.1s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.73">
+    <animateTransform attributeName="transform" type="translate" values="784,-310;936,870" dur="19.9s" begin="-2.3s" repeatCount="indefinite"/>
+    <g transform="translate(784 -310) scale(1.60)">
+      <animateTransform attributeName="transform" type="rotate" values="0;260" dur="8.3s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffc6dd"/>
+    </g>
+  </g>
+
+  <g opacity="0.68">
+    <animateTransform attributeName="transform" type="translate" values="1323,-170;1529,1010" dur="14.6s" begin="-7.4s" repeatCount="indefinite"/>
+    <g transform="translate(1323 -170) scale(2.19)">
+      <animateTransform attributeName="transform" type="rotate" values="0;260" dur="6.1s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffc6dd"/>
+    </g>
+  </g>
+
+  <g opacity="0.69">
+    <animateTransform attributeName="transform" type="translate" values="657,-167;811,1013" dur="16.8s" begin="-10.9s" repeatCount="indefinite"/>
+    <g transform="translate(657 -167) scale(2.39)">
+      <animateTransform attributeName="transform" type="rotate" values="0;260" dur="7.0s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ff8fbb"/>
+    </g>
+  </g>
+
+  <g opacity="0.81">
+    <animateTransform attributeName="transform" type="translate" values="719,-23;841,1157" dur="18.3s" begin="-15.1s" repeatCount="indefinite"/>
+    <g transform="translate(719 -23) scale(1.76)">
+      <animateTransform attributeName="transform" type="rotate" values="0;420" dur="7.6s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffb3d2"/>
+    </g>
+  </g>
+
+  <g opacity="0.59">
+    <animateTransform attributeName="transform" type="translate" values="515,-303;629,877" dur="18.4s" begin="-0.9s" repeatCount="indefinite"/>
+    <g transform="translate(515 -303) scale(1.21)">
+      <animateTransform attributeName="transform" type="rotate" values="0;260" dur="7.7s" repeatCount="indefinite" additive="sum"/>
+      <path d="M0 0 C9 -12 22 -12 28 0 C22 12 9 12 0 0 Z" fill="#ffc6dd"/>
+    </g>
+  </g>
+
+  <g transform="translate(944 451) scale(1.43)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="5.5s" begin="-1.0s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <g transform="translate(1088 176) scale(1.24)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="7.1s" begin="-1.3s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <g transform="translate(1381 392) scale(0.88)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="7.6s" begin="-1.5s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <g transform="translate(619 240) scale(0.90)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="6.3s" begin="-0.5s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <g transform="translate(779 409) scale(0.98)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="5.4s" begin="-2.9s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <g transform="translate(907 115) scale(1.11)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="7.9s" begin="-3.4s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <g transform="translate(579 141) scale(1.22)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="5.8s" begin="-5.3s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <g transform="translate(1243 409) scale(1.22)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="5.9s" begin="-5.7s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <g transform="translate(196 514) scale(0.79)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="5.9s" begin="-4.1s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <g transform="translate(355 396) scale(1.48)" fill="#ffffff" opacity="0">
+    <animate attributeName="opacity" values="0;.95;0" dur="7.4s" begin="-4.8s" repeatCount="indefinite"/>
+    <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"/>
+  </g>
+
+  <circle cx="561" cy="145" r="33" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="6.0s" begin="-3.7s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1367" cy="229" r="26" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="8.4s" begin="-2.9s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1013" cy="697" r="37" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="5.1s" begin="-1.3s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1031" cy="567" r="48" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="6.6s" begin="-5.1s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1304" cy="455" r="44" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="8.7s" begin="-0.0s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1130" cy="481" r="26" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="6.3s" begin="-2.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="84" cy="561" r="29" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="9.2s" begin="-1.9s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1186" cy="805" r="32" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="7.5s" begin="-0.3s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1257" cy="190" r="43" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="5.8s" begin="-4.9s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1229" cy="470" r="41" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="8.8s" begin="-6.4s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1270" cy="693" r="34" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="7.8s" begin="-6.4s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1112" cy="305" r="41" fill="url(#an-bokeh)">
+    <animate attributeName="opacity" values="0;.6;0" dur="5.2s" begin="-2.7s" repeatCount="indefinite"/>
+  </circle>
+
+  <rect y="840" width="1600" height="160" fill="url(#an-bottom)"/>
+</svg>

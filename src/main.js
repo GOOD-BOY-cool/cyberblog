@@ -395,7 +395,47 @@
     if (input) input.addEventListener("input", apply);
   }
 
-  /* ---------------- 12. 初始化 ---------------- */
+  /* ---------------- 12. 背景主题切换（经典暗色 ⇄ 二次元亮色） ---------------- */
+  function initTheme() {
+    var btn = $("#theme-toggle");
+    if (!btn) return;
+
+    var root = document.documentElement;
+    var label = $(".theme-toggle__label", btn);
+    var KEY = "neon-theme";
+    var timer = null;
+
+    function paint(theme) {
+      var isAnime = theme === "anime";
+      if (isAnime) root.setAttribute("data-theme", "anime");
+      else root.removeAttribute("data-theme");
+      btn.setAttribute("aria-pressed", isAnime ? "true" : "false");
+      btn.setAttribute("aria-label", isAnime ? "切换到经典暗色背景" : "切换到二次元亮色背景");
+      if (label) label.textContent = isAnime ? "经典" : "二次元";
+      // 移动端地址栏 / 状态栏也一起换色
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute("content", isAnime ? "#fdf8fb" : "#05060a");
+    }
+
+    // 首屏由 <head> 里的内联脚本提前写好 data-theme，这里只同步按钮状态
+    paint(root.getAttribute("data-theme") === "anime" ? "anime" : "dark");
+
+    btn.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "anime" ? "dark" : "anime";
+
+      // 只在切换的那 620ms 打开全局颜色过渡，避免影响 hover / 折叠等常规动画
+      if (!reduceMotion) {
+        root.classList.add("is-theme-switching");
+        clearTimeout(timer);
+        timer = setTimeout(function () { root.classList.remove("is-theme-switching"); }, 620);
+      }
+
+      paint(next);
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+    });
+  }
+
+  /* ---------------- 13. 初始化 ---------------- */
   function boot() {
     // 首屏关键动效（打字机 / 进场 / 导航）立刻上；粒子画布延后到浏览器空闲，
     // 避免和 LCP 抢主线程 —— 背景晚 300ms 出现，肉眼几乎无感。
@@ -410,6 +450,7 @@
     initToc();
     initCopy();
     initArchive();
+    initTheme();
 
     var idle = window.requestIdleCallback || function (fn) { return setTimeout(fn, 260); };
     idle(function () { initCanvas(); }, { timeout: 1400 });

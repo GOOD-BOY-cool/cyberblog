@@ -14,6 +14,7 @@ export function layout({ title, desc, body, root = '', boot = false }) {
 <head>
 <meta charset="UTF-8">
 <script>document.documentElement.classList.add("js");</script>
+<script>(function () { try { if (localStorage.getItem("neon-theme") === "anime") document.documentElement.setAttribute("data-theme", "anime"); } catch (e) {} })();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#05060a">
 <title>${esc(title)}</title>
@@ -30,6 +31,10 @@ export function layout({ title, desc, body, root = '', boot = false }) {
 <link rel="stylesheet" href="/src/styles/cyber.css">
 </head>
 <body>
+<div class="bg-anime" aria-hidden="true">
+  <img class="bg-anime__art" src="/assets/anime-bg.svg" alt="" width="1600" height="1000" decoding="async">
+  <span class="bg-anime__veil"></span>
+</div>
 <div class="fx fx--scanlines" aria-hidden="true"></div>
 <div class="fx fx--vignette" aria-hidden="true"></div>
 <div class="fx fx--grain" aria-hidden="true"></div>
@@ -73,6 +78,18 @@ ${body}
   </div>
   <div class="site-footer__bar" aria-hidden="true"></div>
 </footer>
+<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="切换到二次元亮色背景">
+  <span class="theme-toggle__icon" aria-hidden="true">
+    <svg class="theme-toggle__svg theme-toggle__svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <circle cx="12" cy="12" r="4.2"/>
+      <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"/>
+    </svg>
+    <svg class="theme-toggle__svg theme-toggle__svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 14.5A8.2 8.2 0 0 1 9.5 4a8.4 8.4 0 1 0 10.5 10.5Z"/>
+    </svg>
+  </span>
+  <span class="theme-toggle__label">二次元</span>
+</button>
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>

@@ -83,6 +83,7 @@ code, .mono { font-family: var(--font-mono); }
   z-index: 0;
   pointer-events: none;
   opacity: 0.85;
+  transition: opacity 0.55s var(--ease);
 }
 
 main,
@@ -1445,6 +1446,320 @@ html.js [data-reveal].is-visible {
 .hljs-deletion { color: #ff6b8a; }
 .hljs-emphasis { font-style: italic; }
 .hljs-strong { font-weight: 700; }
+
+/* ---------- 11. 亮色「二次元」背景 + 主题切换 ---------- */
+/* 背景层：默认隐藏，切到二次元主题时淡入；图片用 object-fit: cover 铺满视口 */
+.bg-anime {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none; /* 不拦截滚动与点击 */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.55s var(--ease), visibility 0.55s;
+}
+.bg-anime__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 铺满，保持比例，多余部分裁切 */
+  object-position: 50% 42%;
+}
+/* 柔化层：把动图压成浅底，保证前景文字对比度 */
+.bg-anime__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 250, 252, 0.42) 46%,
+    rgba(255, 255, 255, 0.64) 100%
+  );
+}
+html[data-theme="anime"] .bg-anime { opacity: 1; visibility: visible; }
+html[data-theme="anime"] #bg-canvas { opacity: 0; }
+
+/* 切换瞬间开启全局颜色过渡；620ms 后由 JS 移除，避免拖累常规动画 */
+html.is-theme-switching *,
+html.is-theme-switching *::before,
+html.is-theme-switching *::after {
+  transition:
+    background-color 0.55s var(--ease),
+    color 0.55s var(--ease),
+    border-color 0.55s var(--ease),
+    box-shadow 0.55s var(--ease),
+    fill 0.55s var(--ease),
+    opacity 0.55s var(--ease) !important;
+}
+
+/* 切换按钮：固定在右下角，两个主题下都保持高对比 */
+.theme-toggle {
+  position: fixed;
+  right: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  z-index: 130;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px 11px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  color: #e6faff;
+  background: rgba(8, 15, 26, 0.88);
+  border: 1px solid rgba(34, 240, 255, 0.55);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 34px -14px rgba(34, 240, 255, 0.9), inset 0 0 26px -12px rgba(34, 240, 255, 1);
+  cursor: pointer;
+  transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease,
+    box-shadow 0.35s ease, transform 0.35s var(--ease);
+}
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(34, 240, 255, 0.5);
+  opacity: 0;
+  animation: toggle-pulse 3.6s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes toggle-pulse {
+  0% { opacity: 0.55; transform: scale(1); }
+  70% { opacity: 0; transform: scale(1.14); }
+  100% { opacity: 0; transform: scale(1.14); }
+}
+html[data-theme="anime"] .theme-toggle::after { border-color: rgba(217, 54, 110, 0.5); }
+.theme-toggle:hover { transform: translateY(-2px); border-color: rgba(34, 240, 255, 0.75); }
+.theme-toggle:active { transform: translateY(0) scale(0.98); }
+.theme-toggle:focus-visible { outline: 2px solid var(--magenta); outline-offset: 3px; }
+.theme-toggle__icon { display: grid; place-items: center; width: 18px; height: 18px; }
+.theme-toggle__svg { width: 18px; height: 18px; }
+.theme-toggle__svg--moon { display: none; }
+html[data-theme="anime"] .theme-toggle {
+  color: #2b2f47;
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(217, 54, 110, 0.45);
+  box-shadow: 0 10px 26px -16px rgba(217, 54, 110, 0.75);
+}
+html[data-theme="anime"] .theme-toggle:hover { border-color: rgba(217, 54, 110, 0.75); }
+html[data-theme="anime"] .theme-toggle__svg--sun { display: none; }
+html[data-theme="anime"] .theme-toggle__svg--moon { display: block; }
+
+/* ---- 亮色主题令牌 ---- */
+html[data-theme="anime"] {
+  --text: #2c2f45;
+  --text-dim: #4b4f68;
+  --muted: #6d7190;
+  --cyan: #0b93a8;
+  --magenta: #d9366e;
+  --violet: #6f4bd8;
+  --amber: #a86a00;
+  --line: rgba(88, 70, 120, 0.16);
+  --panel: rgba(255, 255, 255, 0.76);
+  --shadow: 0 18px 50px -32px rgba(70, 50, 96, 0.45);
+}
+
+html[data-theme="anime"] body { background: #fdf8fb; color: var(--text); }
+html[data-theme="anime"] ::-webkit-scrollbar-track { background: #f6eef4; }
+html[data-theme="anime"] ::-webkit-scrollbar-thumb { border-color: #f6eef4; }
+
+/* 氛围层在亮色下减弱，避免脏 */
+html[data-theme="anime"] .fx--scanlines { opacity: 0.12; animation: none; mix-blend-mode: multiply; }
+html[data-theme="anime"] .fx--vignette { display: none; }
+html[data-theme="anime"] .fx--grain { opacity: 0.02; }
+html[data-theme="anime"] .cursor-glow { opacity: 0.3; }
+
+/* 顶栏 */
+html[data-theme="anime"] .site-header {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.6));
+  border-bottom-color: rgba(88, 70, 120, 0.14);
+}
+html[data-theme="anime"] .site-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom-color: rgba(88, 70, 120, 0.2);
+  box-shadow: 0 14px 40px -32px rgba(70, 50, 96, 0.6);
+}
+html[data-theme="anime"] .brand,
+html[data-theme="anime"] .brand__text { color: #202338; }
+html[data-theme="anime"] .nav { background: rgba(255, 255, 255, 0.97); border-color: rgba(88, 70, 120, 0.14); }
+html[data-theme="anime"] .nav__link { color: var(--text-dim); }
+html[data-theme="anime"] .nav__link::after { background: var(--magenta); }
+html[data-theme="anime"] .nav__link--ghost {
+  color: var(--magenta);
+  border-color: rgba(217, 54, 110, 0.32);
+  background: rgba(217, 54, 110, 0.08);
+}
+html[data-theme="anime"] .nav-toggle { border-color: rgba(88, 70, 120, 0.22); }
+html[data-theme="anime"] .nav-toggle span { background: #33374f; }
+html[data-theme="anime"] .status__text { color: var(--muted); }
+html[data-theme="anime"] .status__dot { background: #12b76a; box-shadow: 0 0 12px #12b76a; }
+
+/* 首页 hero */
+html[data-theme="anime"] .chip {
+  color: #0a7183;
+  border-color: rgba(11, 147, 168, 0.3);
+  background: rgba(255, 255, 255, 0.6);
+}
+html[data-theme="anime"] .glitch { color: #23263c; }
+html[data-theme="anime"] .glitch::before,
+html[data-theme="anime"] .glitch::after { mix-blend-mode: multiply; }
+html[data-theme="anime"] .hero__desc { color: var(--text-dim); }
+html[data-theme="anime"] .hero__grid { opacity: 0.16; }
+html[data-theme="anime"] .hero__stats { border-color: rgba(88, 70, 120, 0.16); }
+html[data-theme="anime"] .hero__stats b { color: #23263c; }
+html[data-theme="anime"] .hero__stats span { color: var(--muted); }
+html[data-theme="anime"] .scroll-hint { color: var(--muted); }
+html[data-theme="anime"] .holo__label { color: rgba(60, 66, 100, 0.55); }
+html[data-theme="anime"] .holo__img { filter: saturate(1.12) contrast(1.04); }
+
+/* 卡片 / 面板 / CTA */
+html[data-theme="anime"] .card {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(255, 250, 253, 0.74));
+  border-color: rgba(88, 70, 120, 0.14);
+}
+html[data-theme="anime"] .card__title { color: #1f2337; }
+html[data-theme="anime"] .card:hover .card__title { color: var(--card-accent); }
+html[data-theme="anime"] .card__foot { border-top-color: rgba(88, 70, 120, 0.16); }
+html[data-theme="anime"] .panel { border-color: rgba(88, 70, 120, 0.16); }
+html[data-theme="anime"] .panel__bar {
+  background: rgba(88, 70, 120, 0.045);
+  border-bottom-color: rgba(88, 70, 120, 0.12);
+}
+html[data-theme="anime"] .term__out--ok { color: #0f9d63; }
+html[data-theme="anime"] .signal__img { mix-blend-mode: multiply; opacity: 0.62; }
+html[data-theme="anime"] .signal__grid > div {
+  border-color: rgba(88, 70, 120, 0.14);
+  background: rgba(255, 255, 255, 0.6);
+}
+html[data-theme="anime"] .signal__grid b { color: #0a7183; }
+html[data-theme="anime"] .cta {
+  background:
+    radial-gradient(80% 120% at 50% 0%, rgba(217, 54, 110, 0.1), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 246, 251, 0.8));
+  border-color: rgba(217, 54, 110, 0.22);
+}
+html[data-theme="anime"] .cta::before { opacity: 0.25; }
+html[data-theme="anime"] .cta h2 { color: #202338; }
+html[data-theme="anime"] .cta code {
+  color: #0a7183;
+  background: rgba(11, 147, 168, 0.1);
+  border-color: rgba(11, 147, 168, 0.22);
+}
+
+/* 列表页 / 工具栏 */
+html[data-theme="anime"] .section__head h2 { color: #202338; }
+html[data-theme="anime"] .page-head { border-bottom-color: rgba(88, 70, 120, 0.14); }
+html[data-theme="anime"] .page-sub { color: var(--text-dim); }
+html[data-theme="anime"] .chip-btn {
+  background: rgba(255, 255, 255, 0.66);
+  border-color: rgba(88, 70, 120, 0.16);
+  color: var(--text-dim);
+}
+html[data-theme="anime"] .chip-btn:hover { color: #1f2337; border-color: rgba(11, 147, 168, 0.4); }
+html[data-theme="anime"] .chip-btn.is-active {
+  background: linear-gradient(120deg, var(--cyan), #4fc6d8);
+  color: #06222a;
+  border-color: transparent;
+}
+html[data-theme="anime"] .chip-btn.is-active span { color: rgba(4, 30, 36, 0.65); }
+html[data-theme="anime"] .search {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(88, 70, 120, 0.16);
+}
+html[data-theme="anime"] .search input { color: #2c2f45; }
+html[data-theme="anime"] .search input::placeholder { color: var(--muted); }
+
+/* 文章页 */
+html[data-theme="anime"] .post__title { color: #1d2036; text-shadow: none; }
+html[data-theme="anime"] .post__meta-dot { background: rgba(88, 70, 120, 0.3); }
+html[data-theme="anime"] .post__banner {
+  background: linear-gradient(180deg, #eef6ff, #ffeef6);
+  border-color: rgba(88, 70, 120, 0.14);
+}
+html[data-theme="anime"] .post__banner img { mix-blend-mode: multiply; opacity: 0.7; }
+html[data-theme="anime"] .progress { background: rgba(88, 70, 120, 0.14); }
+html[data-theme="anime"] .prose { color: #33374f; }
+html[data-theme="anime"] .prose h2,
+html[data-theme="anime"] .prose h3,
+html[data-theme="anime"] .prose h4 { color: #1d2036; }
+html[data-theme="anime"] .prose strong { color: #12152a; }
+html[data-theme="anime"] .prose a { border-bottom-color: rgba(11, 147, 168, 0.35); }
+html[data-theme="anime"] .prose a:hover { color: #12152a; }
+html[data-theme="anime"] .prose blockquote {
+  color: #4a3a52;
+  background: linear-gradient(90deg, rgba(217, 54, 110, 0.07), transparent 70%);
+}
+html[data-theme="anime"] .prose code {
+  color: #0a7183;
+  background: rgba(11, 147, 168, 0.08);
+  border-color: rgba(11, 147, 168, 0.18);
+}
+html[data-theme="anime"] .prose th {
+  color: #0a7183;
+  background: rgba(11, 147, 168, 0.07);
+  border-bottom-color: rgba(11, 147, 168, 0.22);
+}
+html[data-theme="anime"] .prose td { color: #3a3e57; border-bottom-color: rgba(88, 70, 120, 0.12); }
+html[data-theme="anime"] .prose tbody tr:hover { background: rgba(11, 147, 168, 0.05); }
+html[data-theme="anime"] .table-wrap { border-color: rgba(88, 70, 120, 0.14); }
+html[data-theme="anime"] .prose hr {
+  background: linear-gradient(90deg, transparent, rgba(11, 147, 168, 0.35), transparent);
+}
+html[data-theme="anime"] .prose li::marker { color: var(--magenta); }
+html[data-theme="anime"] .task__box { border-color: rgba(11, 147, 168, 0.45); background: rgba(11, 147, 168, 0.06); }
+html[data-theme="anime"] .task__box.is-done { border-color: var(--cyan); background: rgba(11, 147, 168, 0.16); }
+html[data-theme="anime"] .toc { border-left-color: rgba(88, 70, 120, 0.16); }
+html[data-theme="anime"] .toc a { color: var(--muted); }
+html[data-theme="anime"] .toc a:hover,
+html[data-theme="anime"] .toc a.is-active { color: var(--cyan); }
+html[data-theme="anime"] .post-nav { border-top-color: rgba(88, 70, 120, 0.14); }
+html[data-theme="anime"] .post-nav__item {
+  background: rgba(255, 255, 255, 0.66);
+  border-color: rgba(88, 70, 120, 0.16);
+}
+html[data-theme="anime"] .post-nav__item:hover { background: rgba(255, 255, 255, 0.9); }
+
+/* 关于页 / 页脚 */
+html[data-theme="anime"] .about__facts li { border-bottom-color: rgba(88, 70, 120, 0.14); }
+html[data-theme="anime"] .about__facts b { color: #2b2f47; }
+html[data-theme="anime"] .about__facts b.ok { color: #0f9d63; }
+html[data-theme="anime"] .timeline li { border-left-color: rgba(11, 147, 168, 0.22); }
+html[data-theme="anime"] .timeline b { color: #23263c; }
+html[data-theme="anime"] .site-footer {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 250, 253, 0.85));
+  border-top-color: rgba(88, 70, 120, 0.14);
+}
+html[data-theme="anime"] .site-footer p { color: var(--text-dim); }
+html[data-theme="anime"] .site-footer__meta { color: var(--muted); }
+
+/* 按钮 */
+html[data-theme="anime"] .btn--primary { color: #04252b; }
+html[data-theme="anime"] .btn--ghost {
+  color: #2c2f45;
+  border-color: rgba(88, 70, 120, 0.22);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* 移动端：按钮缩一号，避免压住正文与页脚 */
+@media (max-width: 820px) {
+  .theme-toggle {
+    right: 14px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    padding: 9px 13px 9px 11px;
+    font-size: 10px;
+    gap: 7px;
+  }
+  .theme-toggle__icon,
+  .theme-toggle__svg { width: 16px; height: 16px; }
+}
+@media (max-width: 380px) {
+  .theme-toggle__label { display: none; }
+  .theme-toggle { padding: 10px; border-radius: 50%; }
+}
 
 /* ---------- 10. motion preferences ---------- */
 @media (prefers-reduced-motion: reduce) {
