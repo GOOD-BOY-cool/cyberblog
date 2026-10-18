@@ -404,7 +404,7 @@
     }
   }
 
-  /* ---------------- 12. 风格切换（卡通 ⇄ 二次元） ---------------- */
+  /* ---------------- 12. 风格切换（赛博 → 卡通 → 二次元 三态轮转） ---------------- */
   function initTheme() {
     var btn = $("#theme-toggle");
     if (!btn) return;
@@ -413,31 +413,41 @@
     var label = $(".theme-toggle__label", btn);
     var KEY = "neon-theme";
     var timer = null;
-    var arts = $$(".bg-cartoon__art, .bg-anime__art");
 
-    // 两种背景图都按需加载，谁被用到才下谁
+    // 顺序即点击顺序：赛博（默认暗色）→ 卡通 → 二次元 → 赛博
+    var ORDER = ["cyber", "cartoon", "anime"];
+    var NAME = { cyber: "赛博", cartoon: "卡通", anime: "二次元" };
+    var THEME_COLOR = { cyber: "#05060a", cartoon: "#eaf8ff", anime: "#fdf8fb" };
+
+    // 背景图按需加载：赛博用粒子画布，不需要图
     function hydrate(theme) {
-      var sel = theme === "anime" ? ".bg-anime__art" : ".bg-cartoon__art";
-      var art = $(sel);
+      if (theme === "cyber") return;
+      var art = $(".bg-" + theme + "__art");
       if (!art || art.getAttribute("src")) return;
       if (art.dataset.src) art.setAttribute("src", art.dataset.src);
     }
 
     function paint(theme) {
-      var isAnime = theme === "anime";
-      root.setAttribute("data-theme", isAnime ? "anime" : "cartoon");
-      hydrate(isAnime ? "anime" : "cartoon");
-      btn.setAttribute("aria-pressed", isAnime ? "true" : "false");
-      btn.setAttribute("aria-label", isAnime ? "切换到卡通风格" : "切换到二次元风格");
-      if (label) label.textContent = isAnime ? "卡通" : "二次元";
+      if (ORDER.indexOf(theme) < 0) theme = "cyber";
+      root.setAttribute("data-theme", theme);
+      hydrate(theme);
+
+      var next = ORDER[(ORDER.indexOf(theme) + 1) % ORDER.length];
+      if (label) label.textContent = NAME[theme];
+      btn.setAttribute("aria-label", "当前风格：" + NAME[theme] + "，点击切换到" + NAME[next]);
+      btn.setAttribute("aria-pressed", theme === "cyber" ? "false" : "true");
+      btn.dataset.theme = theme;
+
       var meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute("content", isAnime ? "#fdf8fb" : "#eaf8ff");
+      if (meta) meta.setAttribute("content", THEME_COLOR[theme]);
     }
 
-    paint(root.getAttribute("data-theme") === "anime" ? "anime" : "cartoon");
+    var current = root.getAttribute("data-theme");
+    paint(ORDER.indexOf(current) < 0 ? "cyber" : current);
 
     btn.addEventListener("click", function () {
-      var next = root.getAttribute("data-theme") === "anime" ? "cartoon" : "anime";
+      var now = root.getAttribute("data-theme");
+      var next = ORDER[(ORDER.indexOf(now) + 1) % ORDER.length] || "cyber";
 
       if (!reduceMotion) {
         root.classList.add("is-theme-switching");

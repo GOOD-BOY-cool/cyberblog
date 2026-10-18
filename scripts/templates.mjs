@@ -15,9 +15,9 @@ export function layout({ title, desc, body, root = '', boot = false }) {
 <head>
 <meta charset="UTF-8">
 <script>document.documentElement.classList.add("js");</script>
-<script>(function () { try { var t = localStorage.getItem("neon-theme"); document.documentElement.setAttribute("data-theme", t === "anime" ? "anime" : "cartoon"); } catch (e) { document.documentElement.setAttribute("data-theme", "cartoon"); } })();</script>
+<script>(function () { try { var t = localStorage.getItem("neon-theme"); document.documentElement.setAttribute("data-theme", t === "cartoon" || t === "anime" ? t : "cyber"); } catch (e) { document.documentElement.setAttribute("data-theme", "cyber"); } })();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#eaf8ff">
+<meta name="theme-color" content="#05060a">
 <title>${esc(title)}</title>
 <meta name="description" content="${escAttr(desc)}">
 <meta property="og:title" content="${escAttr(title)}">
@@ -85,7 +85,7 @@ ${body}
   </div>
   <div class="site-footer__bar" aria-hidden="true"></div>
 </footer>
-<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="切换到二次元风格">
+<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="切换风格，当前：赛博">
   <span class="theme-toggle__icon" aria-hidden="true">
     <svg class="theme-toggle__svg theme-toggle__svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
       <circle cx="12" cy="12" r="4.2"/>
@@ -95,7 +95,7 @@ ${body}
       <path d="M20 14.5A8.2 8.2 0 0 1 9.5 4a8.4 8.4 0 1 0 10.5 10.5Z"/>
     </svg>
   </span>
-  <span class="theme-toggle__label">二次元</span>
+  <span class="theme-toggle__label">赛博</span>
 </button>
 <script type="module" src="/src/main.js"></script>
 </body>
