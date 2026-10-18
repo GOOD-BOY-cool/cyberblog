@@ -31,7 +31,23 @@ npm run dev         # http://localhost:4321
 code cyberblog      # 或在 VSCode 里 File → Open Folder 选中 cyberblog
 ```
 
-仓库自带 `.vscode/`：`Ctrl+Shift+B` 直接跑默认任务（=`npm run dev`），任务面板里还有 `build` 和 `preview(构建产物)`。推荐扩展会在右下角弹出提示，装不装都不影响运行。
+仓库自带 `.vscode/`：`Ctrl+Shift+B` 直接跑默认任务（=`npm run dev`），任务面板里还有 `build`、`preview(构建产物)`、**`发布（构建 + 提交 + 推送）`**。推荐扩展会在右下角弹出提示，装不装都不影响运行。
+
+### 只用鼠标发布
+
+改完内容后不用敲 git 命令，两种点法：
+
+**A. VSCode 内置按钮（3 步）**
+1. `Ctrl+Shift+G` 打开源代码管理 → 改动都在 Changes 里
+2. 点 `+` 全部暂存 → 填一句提交信息 → 点 **✓ Commit**
+3. 点状态栏左下角的 **Sync Changes**（或 `...` 菜单 → Push）
+
+**B. 一个任务搞定（推荐）**
+`Ctrl+Shift+P` → `Tasks: Run Task` → **发布（构建 + 提交 + 推送）** → 输入提交说明 → 回车。
+它会依次执行「本地构建校验 → git add → commit → push」，构建失败就停住，不会把坏代码推上去。
+
+> 两者效果一样：push 后约 60 秒 GitHub Actions 自动构建并发布。
+> 没有改动时任务会跳过 commit，直接 push（显示 Everything up-to-date），不会报错。
 
 ## 常用命令
 
