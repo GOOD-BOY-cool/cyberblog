@@ -28,6 +28,10 @@ jobs:
         env:
           # 项目站点部署在 /<repo>/ 子路径下，必须让 Vite 改写资源前缀
           BASE: ${{ github.event.repository.name }}
+      # 首次运行会自动开启 Pages（省掉去 Settings 里点 Source 那一步）
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
