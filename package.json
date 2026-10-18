@@ -1,0 +1,19 @@
+{
+  "name": "neon-edge",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "NEON//EDGE — 赛博朋克静态博客（Vite + markdown-it，构建期依赖 4 个，运行时 0 个）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4321 --strictPort",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
+  },
+  "devDependencies": {
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.0",
+    "vite": "^7.1.5"
+  }
+}

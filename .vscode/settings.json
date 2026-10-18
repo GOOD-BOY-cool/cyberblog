@@ -1,0 +1,22 @@
+{
+  "files.eol": "\n",
+  "files.encoding": "utf8",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  // dist/ 和根目录那几个 .html 都是构建产物，搜索时别被它们干扰
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "/*.html": true,
+    "/posts/**": true
+  },
+  "files.associations": {
+    "*.mjs": "javascript"
+  },
+  "editor.tabSize": 2,
+  // 模板文件里有大量 HTML 字符串，交给 Prettier 手动格式化，不要存盘自动跑
+  "editor.formatOnSave": false,
+  "emmet.includeLanguages": {
+    "javascript": "html"
+  }
+}

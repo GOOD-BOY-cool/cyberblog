@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 180" width="1200" height="180" preserveAspectRatio="none" role="img" aria-label="数据流动态图">
+  <defs>
+    <linearGradient id="ds-a" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff2d78" stop-opacity="0"/>
+      <stop offset="18%" stop-color="#ff2d78" stop-opacity=".9"/>
+      <stop offset="72%" stop-color="#22f0ff" stop-opacity=".9"/>
+      <stop offset="100%" stop-color="#22f0ff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ds-b" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8b5cff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#8b5cff" stop-opacity=".8"/>
+      <stop offset="100%" stop-color="#8b5cff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ds-scan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22f0ff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#22f0ff" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="#22f0ff" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="ds-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0 H0 V40" fill="none" stroke="#22f0ff" stroke-opacity=".08" stroke-width="1"/>
+    </pattern>
+    <filter id="ds-glow" x="-20%" y="-120%" width="140%" height="340%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="180" fill="url(#ds-grid)"/>
+
+  <!-- 主数据流 -->
+  <path d="M0 96 L120 96 L150 62 L180 128 L210 40 L244 148 L276 78 L310 112 L340 96 L470 96 L500 54 L534 142 L566 34 L600 150 L634 70 L666 118 L700 96 L830 96 L860 66 L894 126 L926 48 L960 140 L994 80 L1030 108 L1060 96 L1200 96"
+        fill="none" stroke="url(#ds-a)" stroke-width="2" stroke-linecap="round" filter="url(#ds-glow)"
+        stroke-dasharray="1200" stroke-dashoffset="1200" stroke-opacity=".95">
+    <animate attributeName="stroke-dashoffset" values="1200;0" dur="3.2s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- 副数据流 -->
+  <path d="M0 130 L90 130 L120 108 L160 152 L200 100 L240 156 L280 122 L340 138 L380 130 L520 130 L560 112 L610 152 L660 106 L710 150 L760 118 L820 136 L860 130 L1200 130"
+        fill="none" stroke="url(#ds-b)" stroke-width="1.2" stroke-linecap="round"
+        stroke-dasharray="60 18" stroke-opacity=".8">
+    <animate attributeName="stroke-dashoffset" values="0;-1560" dur="12s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- 顶部帧标记 -->
+  <g fill="#22f0ff" fill-opacity=".5" font-family="ui-monospace, Consolas, monospace" font-size="10" letter-spacing="2">
+    <text x="16" y="24">FRAME 0x1A7F</text>
+    <text x="1040" y="24">SIGNAL LOCKED</text>
+  </g>
+
+  <!-- 均衡器 -->
+  <g fill="#22f0ff" fill-opacity=".55">
+    <rect x="24" y="60" width="4" height="60"><animate attributeName="height" values="20;70;34;60;20" dur="2.4s" repeatCount="indefinite"/><animate attributeName="y" values="120;70;106;80;120" dur="2.4s" repeatCount="indefinite"/></rect>
+    <rect x="34" y="70" width="4" height="40"><animate attributeName="height" values="50;18;66;30;50" dur="3.1s" repeatCount="indefinite"/><animate attributeName="y" values="90;138;62;114;90" dur="3.1s" repeatCount="indefinite"/></rect>
+    <rect x="44" y="80" width="4" height="30"><animate attributeName="height" values="14;48;26;58;14" dur="1.8s" repeatCount="indefinite"/><animate attributeName="y" values="140;96;124;86;140" dur="1.8s" repeatCount="indefinite"/></rect>
+  </g>
+  <g fill="#ff2d78" fill-opacity=".55">
+    <rect x="1148" y="70" width="4" height="45"><animate attributeName="height" values="40;12;58;24;40" dur="2.1s" repeatCount="indefinite"/><animate attributeName="y" values="100;148;82;126;100" dur="2.1s" repeatCount="indefinite"/></rect>
+    <rect x="1158" y="80" width="4" height="30"><animate attributeName="height" values="18;56;30;64;18" dur="2.8s" repeatCount="indefinite"/><animate attributeName="y" values="132;84;120;74;132" dur="2.8s" repeatCount="indefinite"/></rect>
+    <rect x="1168" y="70" width="4" height="40"><animate attributeName="height" values="56;22;44;16;56" dur="1.6s" repeatCount="indefinite"/><animate attributeName="y" values="74;128;96;144;74" dur="1.6s" repeatCount="indefinite"/></rect>
+  </g>
+
+  <!-- 扫描光带 -->
+  <rect x="-160" y="0" width="160" height="180" fill="url(#ds-scan)">
+    <animate attributeName="x" values="-160;1200" dur="6s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- 脉冲节点 -->
+  <circle cx="310" cy="112" r="3" fill="#22f0ff">
+    <animate attributeName="r" values="2;5;2" dur="1.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values=".4;1;.4" dur="1.6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="820" cy="136" r="3" fill="#ff2d78">
+    <animate attributeName="r" values="2;5;2" dur="2.2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values=".4;1;.4" dur="2.2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

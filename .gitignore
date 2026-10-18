@@ -1,0 +1,14 @@
+# 依赖与产物
+node_modules/
+dist/
+
+# 构建器生成的页面 —— 既是 Vite 的多页入口，也是中间产物，不提交
+/index.html
+/about.html
+/404.html
+/posts/
+
+# 杂项
+.DS_Store
+*.local
+.vite/

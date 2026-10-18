@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="NEON EDGE 标志">
+  <defs>
+    <linearGradient id="mk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22f0ff"/>
+      <stop offset="55%" stop-color="#8b5cff"/>
+      <stop offset="100%" stop-color="#ff2d78"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#mk)" stroke-width="2">
+    <path d="M32 4 L56 18 L56 46 L32 60 L8 46 L8 18 Z" stroke-opacity=".95"/>
+    <path d="M32 14 L47 23 L47 41 L32 50 L17 41 L17 23 Z" stroke-opacity=".45" stroke-dasharray="4 5"/>
+  </g>
+  <path d="M24 40 L32 22 L40 40" fill="none" stroke="#22f0ff" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+  <circle cx="32" cy="45" r="2.6" fill="#ff2d78"/>
+</svg>
