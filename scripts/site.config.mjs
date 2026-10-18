@@ -9,8 +9,8 @@ export const SITE = {
   role: '后端开发者 / 赛博美学爱好者',
   desc: '一个赛博朋克风格的静态博客：霓虹、噪点、故障艺术，以及 60FPS 的克制。',
   email: 'hello@example.com',
-  // 部署后改成你的真实域名，sitemap / robots / RSS 都用它
-  url: 'https://example.com',
+  // 线上地址（带子路径）。sitemap / robots / RSS 都用它，改完记得重新构建
+  url: 'https://good-boy-cool.github.io/cyberblog',
   locale: 'zh-CN',
   // 卡片配色轮换，顺序对应 --cyan / --magenta / --violet / --amber
   accents: ['cyan', 'magenta', 'violet', 'amber'],
