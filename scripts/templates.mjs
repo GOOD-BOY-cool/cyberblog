@@ -15,7 +15,7 @@ export function layout({ title, desc, body, root = '', boot = false }) {
 <head>
 <meta charset="UTF-8">
 <script>document.documentElement.classList.add("js");</script>
-<script>(function () { try { if (localStorage.getItem("neon-theme") === "anime") document.documentElement.setAttribute("data-theme", "anime"); } catch (e) {} })();</script>
+<script>(function () { try { var t = localStorage.getItem("neon-theme"); document.documentElement.setAttribute("data-theme", t === "anime" ? "anime" : "cartoon"); } catch (e) { document.documentElement.setAttribute("data-theme", "cartoon"); } })();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#05060a">
 <title>${esc(title)}</title>
@@ -28,10 +28,14 @@ export function layout({ title, desc, body, root = '', boot = false }) {
 <link rel="alternate" type="application/rss+xml" title="${escAttr(SITE.title)}" href="${root}feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@600;800;900&family=ZCOOL+KuaiLe&display=swap" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="/src/styles/cyber.css">
 </head>
 <body>
+<div class="bg-cartoon" aria-hidden="true">
+  <img class="bg-cartoon__art" data-src="/assets/cartoon-bg.svg" alt="" width="1600" height="1000" decoding="async">
+  <span class="bg-cartoon__veil"></span>
+</div>
 <div class="bg-anime" aria-hidden="true">
   <img class="bg-anime__art" data-src="/assets/anime-bg.svg" alt="" width="1600" height="1000" decoding="async">
   <span class="bg-anime__veil"></span>
@@ -81,7 +85,7 @@ ${body}
   </div>
   <div class="site-footer__bar" aria-hidden="true"></div>
 </footer>
-<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="切换到二次元亮色背景">
+<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="切换到二次元风格">
   <span class="theme-toggle__icon" aria-hidden="true">
     <svg class="theme-toggle__svg theme-toggle__svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
       <circle cx="12" cy="12" r="4.2"/>

@@ -5,7 +5,7 @@
 - **构建**：Vite 7 + markdown-it（构建期依赖 4 个，产物零运行时依赖）
 - **内容**：`content/*.md` + front matter，改完 push 就发布
 - **动效**：原生 CSS 动画 + 原生 JS + SMIL 动画 SVG（没有一张 GIF，动图仅 12KB）
-- **双背景**：右下角按钮一键在「经典暗色」与「亮色二次元」之间切换，0.55s 交叉淡入、无刷新、localStorage 记忆
+- **双风格**：右下角按钮一键在「卡通」（默认，厚描边 + 硬投影 + 卡通天空动图）与「二次元」（磨砂玻璃 + 淡彩壁纸）之间切换，0.55s 交叉淡入、无刷新、localStorage 记忆
 - **内容页**：首页 / 日志（筛选+搜索）/ 归档（按年份）/ 友链 / 关于 / 404 / RSS
 - **评论**：Giscus（GitHub Discussions），未配置时显示开通步骤，不会请求外部脚本
 - **部署**：纯静态，GitHub Pages / Netlify / Vercel / Cloudflare / Nginx 都能跑
@@ -97,7 +97,7 @@ dist/             构建产物，可直接部署
 
 右下角固定按钮：经典暗色 ⇄ 亮色二次元。点击即时生效，不刷新页面，选择记在 `localStorage`（key：`neon-theme`），刷新后保持；首次加载由 `<head>` 里的内联脚本提前写入 `data-theme`，不会闪一下暗色。
 
-- **背景图**：`public/assets/anime-bg.svg` —— 纯 SMIL 动图（流云 / 樱花 / 光斑 / 太阳），24KB，无限缩放不糊
+- **背景图**：`public/assets/cartoon-bg.svg`（卡通天空：太阳/云/草地/气泡）、`public/assets/anime-bg.svg`（二次元淡彩） —— 纯 SMIL 动图（流云 / 樱花 / 光斑 / 太阳），24KB，无限缩放不糊
 - **换成自己的图**：把 gif / webp / mp4 丢进 `public/assets/`，改 `scripts/templates.mjs` 里 `.bg-anime__art` 的 `src` 即可；`object-fit: cover` 已保证铺满
 - **铺满与可读性**：`.bg-anime` 是固定层，`z-index: 0` + `pointer-events: none`，不挡滚动与点击；上面盖一层 `.bg-anime__veil`（白色 24%→64% 渐变）压住背景，配合亮色文字令牌保证对比度
 - **配色**：亮色主题的所有颜色都在 `cyber.css` 的 `html[data-theme="anime"]` 块里，改令牌即可整体换肤

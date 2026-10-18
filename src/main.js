@@ -404,7 +404,7 @@
     }
   }
 
-  /* ---------------- 12. 背景主题切换（经典暗色 ⇄ 二次元亮色） ---------------- */
+  /* ---------------- 12. 风格切换（卡通 ⇄ 二次元） ---------------- */
   function initTheme() {
     var btn = $("#theme-toggle");
     if (!btn) return;
@@ -413,35 +413,32 @@
     var label = $(".theme-toggle__label", btn);
     var KEY = "neon-theme";
     var timer = null;
+    var arts = $$(".bg-cartoon__art, .bg-anime__art");
 
-    // 背景图按需加载：只有真的切到二次元主题才下载这 24KB
-    var art = $(".bg-anime__art");
-    function hydrateArt() {
+    // 两种背景图都按需加载，谁被用到才下谁
+    function hydrate(theme) {
+      var sel = theme === "anime" ? ".bg-anime__art" : ".bg-cartoon__art";
+      var art = $(sel);
       if (!art || art.getAttribute("src")) return;
-      var src = art.dataset.src;
-      if (src) art.setAttribute("src", src);
+      if (art.dataset.src) art.setAttribute("src", art.dataset.src);
     }
 
     function paint(theme) {
       var isAnime = theme === "anime";
-      if (isAnime) hydrateArt();
-      if (isAnime) root.setAttribute("data-theme", "anime");
-      else root.removeAttribute("data-theme");
+      root.setAttribute("data-theme", isAnime ? "anime" : "cartoon");
+      hydrate(isAnime ? "anime" : "cartoon");
       btn.setAttribute("aria-pressed", isAnime ? "true" : "false");
-      btn.setAttribute("aria-label", isAnime ? "切换到经典暗色背景" : "切换到二次元亮色背景");
-      if (label) label.textContent = isAnime ? "经典" : "二次元";
-      // 移动端地址栏 / 状态栏也一起换色
+      btn.setAttribute("aria-label", isAnime ? "切换到卡通风格" : "切换到二次元风格");
+      if (label) label.textContent = isAnime ? "卡通" : "二次元";
       var meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute("content", isAnime ? "#fdf8fb" : "#05060a");
+      if (meta) meta.setAttribute("content", isAnime ? "#fdf8fb" : "#eaf8ff");
     }
 
-    // 首屏由 <head> 里的内联脚本提前写好 data-theme，这里只同步按钮状态
-    paint(root.getAttribute("data-theme") === "anime" ? "anime" : "dark");
+    paint(root.getAttribute("data-theme") === "anime" ? "anime" : "cartoon");
 
     btn.addEventListener("click", function () {
-      var next = root.getAttribute("data-theme") === "anime" ? "dark" : "anime";
+      var next = root.getAttribute("data-theme") === "anime" ? "cartoon" : "anime";
 
-      // 只在切换的那 620ms 打开全局颜色过渡，避免影响 hover / 折叠等常规动画
       if (!reduceMotion) {
         root.classList.add("is-theme-switching");
         clearTimeout(timer);
@@ -451,7 +448,6 @@
       paint(next);
       try { localStorage.setItem(KEY, next); } catch (e) {}
 
-      // 通知其他组件（评论 iframe）跟着换主题
       document.dispatchEvent(new CustomEvent("neon:theme", { detail: { theme: next } }));
     });
   }
