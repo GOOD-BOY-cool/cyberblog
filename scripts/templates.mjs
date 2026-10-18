@@ -24,6 +24,15 @@ export function layout({ title, desc, body, root = '', boot = false }) {
 <meta property="og:description" content="${escAttr(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${escAttr(SITE.title)}">
+<meta property="og:image" content="${SITE.url}/assets/og-cover.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${escAttr(SITE.title)} — ${escAttr(SITE.tagline)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${escAttr(title)}">
+<meta name="twitter:description" content="${escAttr(desc)}">
+<meta name="twitter:image" content="${SITE.url}/assets/og-cover.png">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/rss+xml" title="${escAttr(SITE.title)}" href="${root}feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">

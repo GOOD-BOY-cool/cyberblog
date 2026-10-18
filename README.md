@@ -131,3 +131,15 @@ dist/             构建产物，可直接部署
 - 配色 → `src/styles/cyber.css` 顶部 `:root`（`--cyan` `--magenta` `--violet` `--amber`）；亮色主题在同文件的 `html[data-theme="anime"]`
 - 动效开关 → `src/main.js` 里的 `reduceMotion` / `finePointer` 判断
 - 字体 → `scripts/templates.mjs` 里的 Google Fonts `<link>`，或换成本地 woff2
+- **分享缩略图**（微信 / QQ / TG 的预览卡）→ 改 `scripts/og-cover.html`，然后重新截一张 1200×630 的 PNG：
+
+  ```bash
+  # 直接用浏览器打开 scripts/og-cover.html（走 file:// 即可，不依赖本地服务），
+  # 或用命令行截图（Windows 的 Edge）：
+  "/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new \
+    --hide-scrollbars --window-size=1200,630 \
+    --screenshot=public/assets/og-cover.png \
+    "file:///$(pwd)/scripts/og-cover.html"
+  ```
+
+  改完图片要重新 `npm run build`（`public/` 下的文件是原样拷贝进 `dist/`）。

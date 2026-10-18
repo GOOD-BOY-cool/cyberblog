@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    background:
+      radial-gradient(58% 78% at 80% 16%, rgba(255, 45, 120, 0.30), transparent 62%),
+      radial-gradient(66% 88% at 10% 94%, rgba(34, 240, 255, 0.24), transparent 64%),
+      radial-gradient(52% 62% at 48% 46%, rgba(139, 92, 255, 0.16), transparent 72%),
+      #05060a;
+    color: #d8e4f5;
+    font-family: "Bahnschrift", "Segoe UI", system-ui, sans-serif;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(120, 220, 255, 0.075) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120, 220, 255, 0.075) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(78% 78% at 50% 48%, #000 26%, transparent 76%);
+    mask-image: radial-gradient(78% 78% at 50% 48%, #000 26%, transparent 76%);
+  }
+  .ring {
+    position: absolute; right: 86px; top: 96px;
+    width: 300px; height: 300px; border-radius: 50%;
+    border: 1px solid rgba(34, 240, 255, 0.22);
+    box-shadow: 0 0 90px -30px rgba(34, 240, 255, 0.55), inset 0 0 70px -40px rgba(34, 240, 255, 0.5);
+  }
+  .ring::before, .ring::after {
+    content: ""; position: absolute; border-radius: 50%;
+  }
+  .ring::before { inset: 34px; border: 1px dashed rgba(255, 45, 120, 0.34); }
+  .ring::after { inset: 78px; border: 1px solid rgba(139, 92, 255, 0.28); }
+  .core {
+    position: absolute; right: 206px; top: 216px;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: radial-gradient(circle at 36% 32%, #eafcff, #22f0ff 42%, #0d7f96 74%, transparent 78%);
+    box-shadow: 0 0 60px rgba(34, 240, 255, 0.6);
+  }
+  .wrap { position: absolute; inset: 0; padding: 76px 80px; display: flex; flex-direction: column; }
+  .tag {
+    font-family: "Cascadia Code", Consolas, ui-monospace, monospace;
+    font-size: 13px; letter-spacing: 0.22em; color: #22f0ff; margin-bottom: 34px;
+  }
+  .tag b { color: #ff2d78; font-weight: 700; }
+  h1 {
+    font-size: 116px; line-height: 1; font-weight: 700; letter-spacing: 0.01em;
+    color: #f4f9ff; font-stretch: semi-condensed;
+    text-shadow: 3px 0 rgba(255, 45, 120, 0.55), -3px 0 rgba(34, 240, 255, 0.55);
+  }
+  h1 span { color: #22f0ff; }
+  .sub {
+    margin-top: 26px; font-size: 27px; font-weight: 400; letter-spacing: 0.06em;
+    color: #a9b8d0;
+  }
+  .sub em { font-style: normal; color: #ff2d78; }
+  .foot {
+    margin-top: auto; display: flex; align-items: center; gap: 22px;
+    font-family: "Cascadia Code", Consolas, ui-monospace, monospace;
+    font-size: 17px; letter-spacing: 0.08em; color: #8fa0ba;
+  }
+  .foot .dot { width: 7px; height: 7px; border-radius: 50%; background: #4dffa6; box-shadow: 0 0 12px #4dffa6; }
+  .foot .sep { width: 30px; height: 1px; background: rgba(120, 220, 255, 0.3); }
+  .foot .site { color: #22f0ff; }
+  .corner { position: absolute; width: 26px; height: 26px; border: 1px solid rgba(34, 240, 255, 0.45); }
+  .c1 { left: 34px; top: 34px; border-right: 0; border-bottom: 0; }
+  .c2 { right: 34px; bottom: 34px; border-left: 0; border-top: 0; }
+  .bar { position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(34, 240, 255, 0.5), transparent); }
+  .bar1 { top: 0; }
+  .bar2 { bottom: 0; background: linear-gradient(90deg, transparent, rgba(255, 45, 120, 0.5), transparent); }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="ring"></div>
+  <div class="core"></div>
+  <div class="bar bar1"></div>
+  <div class="bar bar2"></div>
+  <div class="corner c1"></div>
+  <div class="corner c2"></div>
+  <div class="wrap">
+    <p class="tag"><b>//</b> SYSTEM.ONLINE</p>
+    <h1>NEON<span>//</span>EDGE</h1>
+    <p class="sub">在信号的边缘写代码<em>。</em></p>
+    <div class="foot">
+      <span class="dot"></span>
+      <span>赛博朋克静态博客</span>
+      <span class="sep"></span>
+      <span>Vite + markdown-it</span>
+      <span class="sep"></span>
+      <span>零运行时依赖</span>
+      <span class="sep"></span>
+      <span class="site">milk-dragon.cn</span>
+    </div>
+  </div>
+</body>
+</html>

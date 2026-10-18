@@ -8,7 +8,7 @@ export const SITE = {
   author: 'ZERO',
   role: '后端开发者 / 赛博美学爱好者',
   desc: '一个赛博朋克风格的静态博客：霓虹、噪点、故障艺术，以及 60FPS 的克制。',
-  email: 'hello@example.com',
+  email: 'zjzxh123.zj@outlook.com',
   // 线上地址（自定义域名，根路径部署）。sitemap / robots / RSS 都用它，改完记得重新构建
   url: 'https://milk-dragon.cn',
   locale: 'zh-CN',
