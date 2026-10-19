@@ -34,9 +34,9 @@ export const SITE = {
    * 留空则文章页显示「如何开启评论」的占位说明，不会请求任何外部脚本。
    */
   giscus: {
-    repo: '',
-    repoId: '',
+    repo: 'GOOD-BOY-cool/cyberblog',
+    repoId: 'R_kgDOVOU7PA',
     category: 'General',
-    categoryId: '',
+    categoryId: 'DIC_kwDOVOU7PM4DI_Wt',
   },
 }

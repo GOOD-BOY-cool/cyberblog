@@ -487,6 +487,10 @@
   }
 
   /* ---------------- 13. 评论（Giscus：基于 GitHub Discussions，无后端） ---------------- */
+  function giscusTheme(theme) {
+    return theme === "cartoon" || theme === "anime" ? "light" : "dark";
+  }
+
   function initComments() {
     var mount = $("#giscus-mount");
     if (!mount) return;
@@ -530,7 +534,8 @@
       s.setAttribute("data-input-position", "top");
       s.setAttribute("data-lang", "zh-CN");
       s.setAttribute("data-loading", "lazy");
-      s.setAttribute("data-theme", document.documentElement.getAttribute("data-theme") === "anime" ? "light" : "dark");
+      // 三套皮肤里只有「赛博」是暗色，卡通 / 二次元都是亮底
+      s.setAttribute("data-theme", giscusTheme(document.documentElement.getAttribute("data-theme")));
       mount.appendChild(s);
     }
 
@@ -553,7 +558,7 @@
       var frame = document.querySelector("iframe.giscus-frame");
       if (!frame || !frame.contentWindow) return;
       frame.contentWindow.postMessage(
-        { giscus: { setConfig: { theme: e.detail.theme === "anime" ? "light" : "dark" } } },
+        { giscus: { setConfig: { theme: giscusTheme(e.detail.theme) } } },
         "https://giscus.app"
       );
     });
