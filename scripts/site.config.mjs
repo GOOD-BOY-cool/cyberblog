@@ -3,11 +3,11 @@
  * 换配色去 src/styles/cyber.css 的 :root，换内容去 content/
  */
 export const SITE = {
-  title: 'NEON//EDGE',
+  title: 'MAGIC//BLOG',
   tagline: '在信号的边缘写代码',
-  author: 'ZERO',
-  role: '后端开发者 / 赛博美学爱好者',
-  desc: '一个赛博朋克风格的静态博客：霓虹、噪点、故障艺术，以及 60FPS 的克制。',
+  author: '奶龙肘子',
+  role: '后端开发者 / 摆烂之人 / 奶龙大王',
+  desc: '奶龙的超级无敌blog',
   email: 'zjzxh123.zj@outlook.com',
   // 线上地址（自定义域名，根路径部署）。sitemap / robots / RSS 都用它，改完记得重新构建
   url: 'https://milk-dragon.cn',
@@ -16,9 +16,10 @@ export const SITE = {
   chip: 'SYSTEM ONLINE · 2026 · NODE 07',
   // 首页打字机轮播的三句话（用 | 分隔，写几句都行）
   heroWords: [
-    '在信号的边缘写代码',
-    '用 4 个构建期依赖做出赛博美学',
-    '让动画跑满 60 帧',
+    '我是奶~我是奶龙~',
+    '不过些许风霜罢了',
+    '落魄谷中寒风吹，春秋蝉鸣少年归',
+    '仰天大笑出门去，我辈岂是蓬蒿人',
   ],
   // 卡片配色轮换，顺序对应 --cyan / --magenta / --violet / --amber
   accents: ['cyan', 'magenta', 'violet', 'amber'],

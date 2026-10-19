@@ -10,34 +10,16 @@
  */
 export const LINKS = [
   {
-    name: '阮一峰的网络日志',
-    url: 'https://www.ruanyifeng.com/blog/',
-    desc: '每周五的技术周刊，中文技术圈最稳定的信息源之一。',
-    tags: ['技术周刊'],
+    name: 'Luomic',
+    url: 'https://blog.luomic.com/',
+    desc: '超级无敌大手，吓哭了。',
+    tags: ['大手子'],
   },
   {
-    name: 'CSS-Tricks',
-    url: 'https://css-tricks.com/',
-    desc: 'CSS 技巧与前端工程实践，本站很多动效思路来自这里。',
-    tags: ['CSS', '前端'],
-  },
-  {
-    name: 'Josh W. Comeau',
-    url: 'https://www.joshwcomeau.com/',
-    desc: '把 CSS 动画和交互讲透的人，文章配图一绝。',
-    tags: ['动效', '教程'],
-  },
-  {
-    name: 'Vite 官方文档',
-    url: 'https://cn.vitejs.dev/',
-    desc: '本站的构建工具，中文文档质量很高。',
-    tags: ['工具'],
-  },
-  {
-    name: 'MDN Web Docs',
-    url: 'https://developer.mozilla.org/zh-CN/',
-    desc: '写原生 JS 时最常开的那个标签页。',
-    tags: ['参考'],
+    name: '精弘',
+    url: 'https://www.myzjut.org/',
+    desc: '神秘的组织',
+    tags: ['组织'],
   },
 ]
 
