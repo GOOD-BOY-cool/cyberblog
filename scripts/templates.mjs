@@ -8,6 +8,16 @@ import { LINKS, LINKS_NOTE } from './links.mjs'
 const esc = (s) => String(s ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c])
 const escAttr = (s) => esc(s).replace(/"/g, '&quot;')
 
+/**
+ * 站点名可以写成 "前半//后半"，中间那对斜杠会套上各自场景的样式
+ * （导航用 <em>、首屏故障标题用 .glitch__slash、启动动画用 <span>）。
+ * 写成 "我的博客" 这种没有 // 的也没问题，整串直接输出。
+ */
+const [TITLE_LEFT, TITLE_RIGHT] = SITE.title.split('//')
+const brandHTML = TITLE_RIGHT ? `${TITLE_LEFT}<em>//</em>${TITLE_RIGHT}` : SITE.title
+const glitchHTML = TITLE_RIGHT ? `${TITLE_LEFT}<span class="glitch__slash">//</span>${TITLE_RIGHT}` : SITE.title
+const bootHTML = TITLE_RIGHT ? `${TITLE_LEFT}<span>//</span>${TITLE_RIGHT}` : SITE.title
+
 /* ---------------------------------------------------------------- 骨架层 */
 export function layout({ title, desc, body, root = '', boot = false }) {
   return `<!DOCTYPE html>
@@ -63,7 +73,7 @@ ${boot ? BOOT : ''}
   <div class="container site-header__inner">
     <a class="brand" href="${root}index.html" aria-label="返回首页">
       <img class="brand__mark" src="/assets/mark.svg" alt="" width="38" height="38">
-      <span class="brand__text">NEON<em>//</em>EDGE</span>
+      <span class="brand__text">${brandHTML}</span>
     </a>
     <button class="nav-toggle" id="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -87,8 +97,8 @@ ${body}
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
-      <span class="brand__text">NEON<em>//</em>EDGE</span>
-      <p>在信号的边缘写代码。二〇二六，持续在线。</p>
+      <span class="brand__text">${brandHTML}</span>
+      <p>${esc(SITE.tagline)}。二〇二六，持续在线。</p>
     </div>
     <div class="site-footer__meta">
       <span>&copy; ${new Date().getFullYear()} ${esc(SITE.author)}</span>
@@ -118,7 +128,7 @@ ${body}
 
 const BOOT = `<div class="boot" id="boot" aria-hidden="true">
   <div class="boot__inner">
-    <div class="boot__logo">NEON<span>//</span>EDGE</div>
+    <div class="boot__logo">${bootHTML}</div>
     <div class="boot__bar"><i></i></div>
     <div class="boot__log mono">BOOTING NEURAL INTERFACE ... OK</div>
   </div>
@@ -130,9 +140,9 @@ const HERO = (postCount) => `<section class="hero">
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="container hero__inner">
     <div class="hero__copy" data-reveal>
-      <p class="chip"><span class="chip__dot"></span>SYSTEM ONLINE · 2026 · NODE 07</p>
-      <h1 class="glitch" data-text="NEON//EDGE">NEON<span class="glitch__slash">//</span>EDGE</h1>
-      <p class="hero__type"><span class="type" id="typewriter" data-words="在信号的边缘写代码|用 4 个构建期依赖做出赛博美学|让动画跑满 60 帧"></span><span class="caret" aria-hidden="true"></span></p>
+      <p class="chip"><span class="chip__dot"></span>${esc(SITE.chip)}</p>
+      <h1 class="glitch" data-text="${escAttr(SITE.title)}">${glitchHTML}</h1>
+      <p class="hero__type"><span class="type" id="typewriter" data-words="${escAttr(SITE.heroWords.join('|'))}"></span><span class="caret" aria-hidden="true"></span></p>
       <p class="hero__desc">${esc(SITE.desc)}</p>
       <div class="hero__actions">
         <a class="btn btn--primary" href="posts/index.html"><span>进入日志</span><i>&#8594;</i></a>

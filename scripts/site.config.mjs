@@ -12,6 +12,14 @@ export const SITE = {
   // 线上地址（自定义域名，根路径部署）。sitemap / robots / RSS 都用它，改完记得重新构建
   url: 'https://milk-dragon.cn',
   locale: 'zh-CN',
+  // 首页首屏那颗小胶囊里的文字
+  chip: 'SYSTEM ONLINE · 2026 · NODE 07',
+  // 首页打字机轮播的三句话（用 | 分隔，写几句都行）
+  heroWords: [
+    '在信号的边缘写代码',
+    '用 4 个构建期依赖做出赛博美学',
+    '让动画跑满 60 帧',
+  ],
   // 卡片配色轮换，顺序对应 --cyan / --magenta / --violet / --amber
   accents: ['cyan', 'magenta', 'violet', 'amber'],
 
