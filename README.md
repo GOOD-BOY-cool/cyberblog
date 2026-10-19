@@ -98,7 +98,7 @@ dist/             构建产物，可直接部署
 
 右下角固定按钮：赛博 → 卡通 → 二次元 三态轮转（默认赛博）。点击即时生效，不刷新页面，选择记在 `localStorage`（key：`neon-theme`），刷新后保持；首次加载由 `<head>` 里的内联脚本提前写入 `data-theme`，不会闪一下暗色。
 
-- **背景**：`cyber-bg.webp`（赛博，1920×1080 虚化城市夜景，22KB）、`miku-bg.mp4`（二次元，1280×720 H.264 12 秒循环，2.6MB，切到该主题才加载播放，`miku-bg.jpg` 为 poster）、`cartoon-bg.svg`（卡通天空，SMIL 动图 20KB）
+- **背景**：`cyber-bg.webp` + `cyber-bg-2k.webp`（赛博，4K 城市夜景，1920/2560 两档，`srcset` 自动选择，124KB / 164KB）、`miku-bg.mp4` + `miku-bg.jpg`（二次元，1280×720 H.264 12 秒循环 2.6MB，切到该主题才加载播放）、`anime-bg.svg`（卡通，粉色淡彩天空 + 樱花，SMIL 动图 24KB）
 - **换成自己的图**：把 gif / webp / mp4 丢进 `public/assets/`，改 `scripts/templates.mjs` 里 `.bg-anime__art` 的 `src` 即可；`object-fit: cover` 已保证铺满
 - **铺满与可读性**：`.bg-anime` 是固定层，`z-index: 0` + `pointer-events: none`，不挡滚动与点击；上面盖一层 `.bg-anime__veil`（白色 24%→64% 渐变）压住背景，配合亮色文字令牌保证对比度
 - **配色**：亮色主题的所有颜色都在 `cyber.css` 的 `html[data-theme="anime"]` 块里，改令牌即可整体换肤

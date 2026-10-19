@@ -14,3 +14,8 @@ dist/
 .DS_Store
 *.local
 .vite/
+
+# 调试用的临时截图与草稿（以 _ 开头的一律不进库）
+_*.png
+_*.jpg
+_*.html

@@ -46,7 +46,7 @@ export function layout({ title, desc, body, root = '', boot = false }) {
   <span class="bg-cyber__veil"></span>
 </div>
 <div class="bg-cartoon" aria-hidden="true">
-  <img class="bg-cartoon__art" data-src="/assets/cartoon-bg.svg" alt="" width="1600" height="1000" decoding="async">
+  <img class="bg-cartoon__art" data-src="/assets/anime-bg.svg" alt="" width="1600" height="1000" decoding="async">
   <span class="bg-cartoon__veil"></span>
 </div>
 <div class="bg-anime" aria-hidden="true">
