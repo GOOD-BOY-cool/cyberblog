@@ -41,6 +41,10 @@ export function layout({ title, desc, body, root = '', boot = false }) {
 <link rel="stylesheet" href="/src/styles/cyber.css">
 </head>
 <body>
+<div class="bg-cyber" aria-hidden="true">
+  <img class="bg-cyber__art" src="/assets/cyber-bg.webp" alt="" width="1920" height="1080" decoding="async">
+  <span class="bg-cyber__veil"></span>
+</div>
 <div class="bg-cartoon" aria-hidden="true">
   <img class="bg-cartoon__art" data-src="/assets/cartoon-bg.svg" alt="" width="1600" height="1000" decoding="async">
   <span class="bg-cartoon__veil"></span>

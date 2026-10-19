@@ -280,11 +280,14 @@
     if (!boot) return;
     if (reduceMotion) { boot.remove(); return; }
     var done = function () {
+      if (!boot.parentNode) return;
       boot.classList.add("is-done");
-      setTimeout(function () { boot.remove(); }, 800);
+      setTimeout(function () { if (boot.parentNode) boot.remove(); }, 800);
     };
-    if (document.readyState === "complete") setTimeout(done, 620);
-    else window.addEventListener("load", function () { setTimeout(done, 620); });
+    // 不能等 window.load：Google Fonts 在国内可能几十秒才超时，
+    // 那段时间 boot 遮罩会一直盖着页面。这里按固定节拍撤场。
+    setTimeout(done, 900);
+    setTimeout(function () { if (boot.parentNode) boot.remove(); }, 2600);
   }
 
   /* ---------------- 9. 阅读进度 / 目录高亮 ---------------- */
