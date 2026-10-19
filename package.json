@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "push": "node scripts/push.mjs",
     "preview": "vite preview --port 4321 --strictPort",
     "stop": "node scripts/stop.mjs",
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""

@@ -46,7 +46,7 @@
       "label": "发布（构建 + 提交 + 推送）",
       "detail": "本地先构建校验，再 git add / commit / push，GitHub Actions 自动上线",
       "type": "shell",
-      "command": "npm run build && git add -A && (git diff --cached --quiet || git commit -m \"${input:commitMsg}\") && git push",
+      "command": "npm run build && git add -A && (git diff --cached --quiet || git commit -m \"${input:commitMsg}\") && npm run push",
       "options": { "shell": { "executable": "cmd.exe", "args": ["/d", "/c"] } },
       "problemMatcher": [],
       "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
