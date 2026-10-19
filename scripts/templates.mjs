@@ -42,7 +42,7 @@ export function layout({ title, desc, body, root = '', boot = false }) {
 </head>
 <body>
 <div class="bg-cyber" aria-hidden="true">
-  <img class="bg-cyber__art" src="/assets/cyber-bg.webp" alt="" width="1920" height="1080" decoding="async">
+  <img class="bg-cyber__art" src="/assets/cyber-bg.webp" srcset="/assets/cyber-bg.webp 1920w, /assets/cyber-bg-2k.webp 2560w" sizes="100vw" alt="" width="1920" height="1080" decoding="async">
   <span class="bg-cyber__veil"></span>
 </div>
 <div class="bg-cartoon" aria-hidden="true">
