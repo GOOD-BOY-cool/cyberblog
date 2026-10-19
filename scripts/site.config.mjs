@@ -24,6 +24,50 @@ export const SITE = {
   // 卡片配色轮换，顺序对应 --cyan / --magenta / --violet / --amber
   accents: ['cyan', 'magenta', 'violet', 'amber'],
 
+  // 浏览器标签页里 <title> 的后缀
+  subtitle: '赛博朋克静态博客',
+
+  /**
+   * 关于页（OPERATOR）
+   * readme 与 quote 支持少量 HTML（<strong> <code> <a>），其余按纯文本转义
+   */
+  about: {
+    sub: '一个把后端逻辑写进霓虹里的人。',
+    location: 'Beijing / CN',
+    stack: 'Go · Python · CSS · JS',
+    status: 'AVAILABLE',
+    readme: [
+      '我在做后端，也在做视觉。白天写接口与事务，夜里调霓虹与噪点。',
+      '这个站是一个实验：<strong>用极少的构建期依赖，做出不掉帧的静态博客</strong>。内容用 Markdown 写，Vite 负责打包，动效是原生 CSS + 原生 JS + SVG/SMIL，部署到任何静态托管都能跑。',
+    ],
+    quote: '好的动效不是炫技，是在 16.7ms 的预算里讲清楚一件事。',
+    timeline: [
+      {
+        date: '2026.10',
+        title: 'MAGIC//BLOG 上线',
+        desc: 'Vite + markdown-it 静态博客，赛博 / 卡通 / 二次元三套皮肤。',
+      },
+      {
+        date: '2026.08',
+        title: '孤独市集二期',
+        desc: 'Go + Gin + GORM 的校园二手交易后端，购买请求工作流。',
+      },
+      {
+        date: '2024.09',
+        title: '开始写代码',
+        desc: '从 C 语言指针开始，一路走到分布式与前端动效。',
+      },
+    ],
+  },
+
+  // 首页底部那张 CTA 卡片（desc 支持 HTML）
+  cta: {
+    kicker: '// TRANSMISSION OPEN',
+    title: '把想法写进日志，让霓虹替你通电。',
+    desc: '所有文章以 Markdown 存放，一次 <code>npm run build</code> 即可发布。没有前端框架，没有 hydration，产物就是 HTML + CSS + 一点点原生 JS。',
+    button: '浏览全部日志',
+  },
+
   /**
    * 评论（Giscus，基于 GitHub Discussions，免费、无广告、无后端）
    * 开启步骤：

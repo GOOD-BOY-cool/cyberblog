@@ -233,16 +233,16 @@ export function buildIndex(posts) {
     `<section class="section section--cta">
   <div class="container">
     <div class="cta" data-reveal>
-      <p class="cta__kicker mono">// TRANSMISSION OPEN</p>
-      <h2>把想法写进日志，让霓虹替你通电。</h2>
-      <p>所有文章以 Markdown 存放，一次 <code>npm run build</code> 即可发布。没有前端框架，没有 hydration，产物就是 HTML + CSS + 一点点原生 JS。</p>
-      <a class="btn btn--primary" href="posts/index.html"><span>浏览全部日志</span><i>&#8594;</i></a>
+      <p class="cta__kicker mono">${esc(SITE.cta.kicker)}</p>
+      <h2>${esc(SITE.cta.title)}</h2>
+      <p>${SITE.cta.desc}</p>
+      <a class="btn btn--primary" href="posts/index.html"><span>${esc(SITE.cta.button)}</span><i>&#8594;</i></a>
     </div>
   </div>
 </section>`
 
   return layout({
-    title: `${SITE.title} — 赛博朋克静态博客`,
+    title: `${SITE.title} — ${SITE.subtitle}`,
     desc: SITE.desc,
     body,
     root: '',
@@ -353,11 +353,12 @@ ${commentsBlock()}`
 
 /* ---------------------------------------------------------------- 关于页 */
 export function buildAbout(posts) {
+  const A = SITE.about
   const body = `<section class="page-head page-head--about">
   <div class="container">
     <p class="crumb mono"><a href="index.html">HOME</a> / ABOUT</p>
     <h1 class="page-title glitch" data-text="OPERATOR">OPERATOR</h1>
-    <p class="page-sub">一个把后端逻辑写进霓虹里的人。</p>
+    <p class="page-sub">${esc(A.sub)}</p>
   </div>
 </section>
 <section class="section section--flush">
@@ -369,9 +370,9 @@ export function buildAbout(posts) {
       <h2>${esc(SITE.author)}</h2>
       <p class="mono about__role">${esc(SITE.role)}</p>
       <ul class="about__facts">
-        <li><span>LOCATION</span><b>Beijing / CN</b></li>
-        <li><span>STACK</span><b>Go · Python · CSS · JS</b></li>
-        <li><span>STATUS</span><b class="ok">AVAILABLE</b></li>
+        <li><span>LOCATION</span><b>${esc(A.location)}</b></li>
+        <li><span>STACK</span><b>${esc(A.stack)}</b></li>
+        <li><span>STATUS</span><b class="ok">${esc(A.status)}</b></li>
         <li><span>POSTS</span><b>${posts.length}</b></li>
       </ul>
       <a class="btn btn--primary" href="mailto:${SITE.email}"><span>发送信号</span><i>&#8594;</i></a>
@@ -380,17 +381,19 @@ export function buildAbout(posts) {
       <div class="panel" data-reveal>
         <div class="panel__bar"><span class="mono">// README.md</span></div>
         <div class="prose prose--panel">
-          <p>我在做后端，也在做视觉。白天写接口与事务，夜里调霓虹与噪点。</p>
-          <p>这个站是一个实验：<strong>用极少的构建期依赖，做出不掉帧的赛博朋克静态博客</strong>。内容用 Markdown 写，Vite 负责打包，动效是原生 CSS + 原生 JS + SVG/SMIL，部署到任何静态托管都能跑。</p>
-          <blockquote><p>好的动效不是炫技，是在 16.7ms 的预算里讲清楚一件事。</p></blockquote>
+          ${A.readme.map((p) => `<p>${p}</p>`).join('\n          ')}
+          <blockquote><p>${esc(A.quote)}</p></blockquote>
         </div>
       </div>
       <div class="panel" data-reveal>
         <div class="panel__bar"><span class="mono">// TIMELINE</span></div>
         <ol class="timeline">
-          <li><span class="mono">2026.10</span><b>NEON//EDGE 上线</b><p>Vite + markdown-it 静态博客，赛博朋克视觉系统第一版。</p></li>
-          <li><span class="mono">2026.08</span><b>孤独市集二期</b><p>Go + Gin + GORM 的校园二手交易后端，购买请求工作流。</p></li>
-          <li><span class="mono">2024.09</span><b>开始写代码</b><p>从 C 语言指针开始，一路走到分布式与前端动效。</p></li>
+          ${A.timeline
+            .map(
+              (t) =>
+                `<li><span class="mono">${esc(t.date)}</span><b>${esc(t.title)}</b><p>${esc(t.desc)}</p></li>`
+            )
+            .join('\n          ')}
         </ol>
       </div>
     </div>
